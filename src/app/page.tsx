@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import s from './page.module.css';
+import ButtonStatus from '@/components/ButtonStatus/ButtonStatus';
+import InfoBanner from '@/components/InfoBanner/InfoBanner';
 
 const getDataStatus = async () => {
   let dataReturn = {};
@@ -40,32 +42,8 @@ export default async function Home() {
           </div>
         </div>
         <div className={s.itemCenter} style={{flexDirection: 'column'}}>
-          <div
-            className={s.statusButton}
-            style={
-              data.status == 'open'
-                ? {backgroundColor: '#89EA93', color: '#4BA65F'}
-                : {backgroundColor: '#EA8989', color: '#A64B4B'}
-            }
-          >
-            <b>{data.status == 'open' ? 'BUKA' : 'TUTUP'}</b>
-          </div>
-          {!data.information.includes('sholat') ? (
-            <></>
-          ) : (
-            <div style={{marginTop: '10px'}}>
-              <p
-                style={{
-                  // padding: '10px 20px',
-                  // border: '1px solid #68B3DD',
-                  borderRadius: '5px',
-                  fontSize: '14px',
-                }}
-              >
-                {data.information}
-              </p>
-            </div>
-          )}
+          <ButtonStatus status={data?.status} />
+          <InfoBanner data={data} />
         </div>
       </div>
     </div>
