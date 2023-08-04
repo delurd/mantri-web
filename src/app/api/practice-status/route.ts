@@ -74,7 +74,7 @@ export const GET = async (request: Request, response: Response) => {
         }
     }
 
-    console.log("statusPractice " + statusPractice);
+    console.log("statusPractice " + statusPractice + moment.locale());
 
-    return NextResponse.json({ message: 'success', data: { status: statusPractice, information: informasiDetail, time: moment().format("HH:mm:ss") } })
+    return NextResponse.json({ message: 'success', data: { status: statusPractice, information: informasiDetail, time: moment().format() } })
 }

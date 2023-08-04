@@ -3,6 +3,7 @@ import s from './page.module.css';
 import ButtonStatus from '@/components/ButtonStatus/ButtonStatus';
 import InfoBanner from '@/components/InfoBanner/InfoBanner';
 import { host } from '@/utils/variables';
+import ClientLog from '@/components/ClientLog/ClientLog';
 
 const getDataStatus = async () => {
   let dataReturn = {};
@@ -46,6 +47,7 @@ export default async function Home() {
           <ButtonStatus status={data?.status} />
           <InfoBanner data={data} />
         </div>
+        <ClientLog />
       </div>
     </main>
   );
