@@ -1,8 +1,11 @@
 import React from 'react';
 import s from './buttonStatus.module.css';
+import {type} from 'os';
+
+type statusType = 'open' | 'close' | '';
 
 type Props = {
-  status?: 'open' | 'close' | '';
+  status?: string;
 };
 
 const ButtonStatus = (props: Props) => {
