@@ -1,18 +1,8 @@
 import Image from 'next/image';
 import s from './page.module.css';
+import FooterCard from '@/components/FooterCard/FooterCard';
 
-const getDataStatus = async () => {
-  let dataReturn = {};
-  const res = await fetch('http://localhost:3000/api/practice-status');
-  const json = await res.json();
-
-  const data = json.data;
-  return data;
-};
-
-export default async function Home() {
-  const data = await getDataStatus();
-
+export default function Home() {
   return (
     <main>
       <div
@@ -40,9 +30,7 @@ export default async function Home() {
               />
             </div>
           </div>
-          <div className={s.itemCenter} style={{flexDirection: 'column'}}>
-            <b>{data.status}</b>
-          </div>
+          <FooterCard />
         </div>
       </div>
     </main>
