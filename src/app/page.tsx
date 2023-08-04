@@ -34,7 +34,7 @@ export default async function Home() {
           </div>
           <div style={{flex: 1, position: 'relative'}}>
             <Image
-              src="/illustration-doctor.png"
+              src="/illustration-doctor.PNG"
               alt="illustration"
               style={{position: 'absolute', bottom: 0, right: 0}}
               width={150}
