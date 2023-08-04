@@ -7,6 +7,9 @@ type Props = {};
 
 const ClientLog = (props: Props) => {
   useEffect(() => {
+    moment().utcOffset(0)
+    
+    console.log(moment().utcOffset(0).format());
     console.log(moment().format() + '--' + moment.locale());
   }, []);
   return <></>;
