@@ -4,12 +4,12 @@ import s from './footerCard.module.css';
 type Props = {};
 
 const getDataStatus = async () => {
-  let dataReturn = {};
-  const res = await fetch('http://localhost:3000/api/practice-status');
-  const json = await res.json();
+  let dataReturn = {status : 'open'};
+//   const res = await fetch('http://localhost:3000/api/practice-status');
+//   const json = await res.json();
 
-  const data = json.data;
-  return data;
+//   const data = json.data;
+  return dataReturn;
 };
 
 const FooterCard = async (props: Props) => {
