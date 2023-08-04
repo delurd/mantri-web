@@ -2,19 +2,19 @@ import Image from 'next/image';
 import s from './page.module.css';
 import ButtonStatus from '@/components/ButtonStatus/ButtonStatus';
 import InfoBanner from '@/components/InfoBanner/InfoBanner';
-import {host} from '@/utils/variables';
+import { host } from '@/utils/variables';
 
-// const getDataStatus = async () => {
-//   let dataReturn = {};
-//   const res = await fetch(host+'/api/practice-status');
-//   const json = await res.json();
+const getDataStatus = async () => {
+  let dataReturn = {};
+  const res = await fetch(host+'/api/practice-status');
+  const json = await res.json();
 
-//   const data = json.data;
-//   return data;
-// };
+  const data = json.data;
+  return data;
+};
 
-export default function Home() {
-  const data = {status: 'open', information: ''};
+export default async function Home() {
+  const data = await getDataStatus();
 
   return (
     <main
