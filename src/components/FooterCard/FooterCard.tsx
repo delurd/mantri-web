@@ -10,7 +10,7 @@ const FooterCard = (props: Props) => {
 
   const getDataStatus = useMemo(async () => {
     let dataReturn = {status: 'open'};
-    const res = await fetch('http://localhost:3000/api/practice-status');
+    const res = await fetch('https://mantri-web.vercel.app/api/practice-status');
     const json = await res.json();
 
     const data = json.data;
