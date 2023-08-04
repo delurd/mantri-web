@@ -20,13 +20,12 @@ export default function Home() {
               <h2>Praktik Mantri Mejeruk</h2>
             </div>
             <div style={{flex: 1, position: 'relative'}}>
-              <Image
+              <img
                 src="/illustration-doctor.png"
                 alt="illustration"
                 style={{position: 'absolute', bottom: 0, right: 0}}
                 width={150}
                 height={170}
-                priority
               />
             </div>
           </div>
