@@ -31,6 +31,7 @@
 .colImage{
   flex:1;
   position: relative;
+  pointer-events: none;
 }
 
 

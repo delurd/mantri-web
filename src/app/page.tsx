@@ -7,7 +7,9 @@ import ClientLog from '@/components/ClientLog/ClientLog';
 
 const getDataStatus = async () => {
   let dataReturn = {};
-  const res = await fetch(host + '/api/practice-status');
+  const res = await fetch(host + '/api/practice-status', {
+    next: {revalidate: 0},
+  });
   const json = await res.json();
 
   const data = json.data;
