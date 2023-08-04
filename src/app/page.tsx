@@ -1,95 +1,73 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Image from 'next/image';
+import s from './page.module.css';
 
-export default function Home() {
+const getDataStatus = async () => {
+  let dataReturn = {};
+  const res = await fetch('http://localhost:3000/api/practice-status');
+  const json = await res.json();
+
+  const data = json.data;
+  return data;
+};
+
+export default async function Home() {
+  const data = await getDataStatus();
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
+    <div
+      className={s.itemCenter}
+      style={{
+        height: '100vh',
+        backgroundColor: 'white',
+        backgroundImage: 'url("/bg-patern.png")',
+        backgroundRepeat: 'repeat',
+      }}
+    >
+      <div className={s.card}>
+        <div style={{display: 'flex'}}>
+          <div style={{flex: 1, marginTop: '25px'}}>
+            <h2>Praktik Mantri Mejeruk</h2>
+          </div>
+          <div style={{flex: 1, position: 'relative'}}>
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
+              src="/illustration-doctor.png"
+              alt="illustration"
+              style={{position: 'absolute', bottom: 0, right: 0}}
+              width={150}
+              height={170}
               priority
             />
-          </a>
+          </div>
+        </div>
+        <div className={s.itemCenter} style={{flexDirection: 'column'}}>
+          <div
+            className={s.statusButton}
+            style={
+              data.status == 'open'
+                ? {backgroundColor: '#89EA93', color: '#4BA65F'}
+                : {backgroundColor: '#EA8989', color: '#A64B4B'}
+            }
+          >
+            <b>{data.status == 'open' ? 'BUKA' : 'TUTUP'}</b>
+          </div>
+          {!data.information.includes('sholat') ? (
+            <></>
+          ) : (
+            <div style={{marginTop: '10px'}}>
+              <p
+                style={{
+                  // padding: '10px 20px',
+                  // border: '1px solid #68B3DD',
+                  borderRadius: '5px',
+                  fontSize: '14px',
+                }}
+              >
+                {data.information}
+              </p>
+            </div>
+          )}
         </div>
       </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </div>
+  );
 }
