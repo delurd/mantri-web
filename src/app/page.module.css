@@ -1,17 +1,46 @@
-.itemCenter{
+.main {
+  height: 100vh;
+  background-color: white;
+  background-image: url('/bg-patern.png');
+  background-repeat: repeat;
+}
+
+.itemCenter {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.card{
+.card {
   background-color: rgba(186, 241, 253, 1);
   border-radius: 30px;
   padding: 44px;
   box-shadow: 0 15px 40px rgba(186, 241, 253, 1);
-  color: #68B3DD;
+  color: #68b3dd;
   aspect-ratio: 1/1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.colTitle{
+  flex: 1;
+  margin-top: 25px
+}
+
+.colImage{
+  flex:1;
+  position: relative;
+}
+
+
+.illustrationImage {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 150px;
+  height: 170px;
+  background-image: url('/illustration-doctor.png');
+  background-size: contain;
+  background-repeat: no-repeat;
 }
