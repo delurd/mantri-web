@@ -25,15 +25,15 @@ export default async function Home() {
             <h2>Praktik Mantri Mejeruk</h2>
           </div>
           <div className={s.colImage}>
-            <div className={s.illustrationImage} />
-            {/* <Image
-              src="/illustration-doctor.PNG"
+            {/* <div className={s.illustrationImage} /> */}
+            <Image
+              src="/Illustration-doctor.png"
               alt="illustration"
               style={{position: 'absolute', bottom: 0, right: 0}}
               width={150}
               height={170}
               priority
-            /> */}
+            />
           </div>
         </div>
         <div className={s.itemCenter} style={{flexDirection: 'column'}}>
