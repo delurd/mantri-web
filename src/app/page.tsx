@@ -1,7 +1,18 @@
 import Image from 'next/image';
 import s from './page.module.css';
 
-export default function Home() {
+const getDataStatus = async () => {
+  let dataReturn = {};
+  const res = await fetch('http://localhost:3000/api/practice-status');
+  const json = await res.json();
+
+  const data = json.data;
+  return data;
+};
+
+export default async function Home() {
+  const data = await getDataStatus();
+
   return (
     <main>
       <div
@@ -29,7 +40,9 @@ export default function Home() {
               />
             </div>
           </div>
-          <div className={s.itemCenter} style={{flexDirection: 'column'}}></div>
+          <div className={s.itemCenter} style={{flexDirection: 'column'}}>
+            <b>{data.status}</b>
+          </div>
         </div>
       </div>
     </main>
