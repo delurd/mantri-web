@@ -17,7 +17,7 @@ export default async function Home() {
   const data = await getDataStatus();
 
   return (
-    <div
+    <main
       className={s.itemCenter}
       style={{
         height: '100vh',
@@ -47,6 +47,6 @@ export default async function Home() {
           <InfoBanner data={data} />
         </div>
       </div>
-    </div>
+    </main>
   );
 }
