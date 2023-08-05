@@ -94,8 +94,8 @@ export const POST = async (request: NextRequest) => {
     console.log(body);
 
     const dataReturn = {
-        date : moment(body.time).format("DD-MM-YYYY"),
-        clock: moment(body.time).format("HH:mm"),
+        date : moment(body.time).utcOffset(7).format("DD-MM-YYYY"),
+        clock: moment(body.time).utcOffset(7).format("HH:mm"),
     }
 
 
