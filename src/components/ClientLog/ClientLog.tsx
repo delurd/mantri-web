@@ -1,6 +1,6 @@
 'use client';
 
-import {host} from '@/utils/variables';
+import {credentialKey, host} from '@/utils/variables';
 import moment from 'moment';
 import React, {useEffect} from 'react';
 
@@ -14,12 +14,16 @@ const ClientLog = (props: Props) => {
   }, []);
 
   const getDataStatus = async () => {
-    const res = await fetch(host + '/api/practice-status');
+    const res = await fetch(host + '/api/practice-status', {
+      method: 'POST',
+      headers: {credentialKey: 'credentialKey'},
+      body: JSON.stringify({time: moment().utcOffset(7).format()})
+    });
     const json = await res.json();
 
     const data = json.data;
 
-    console.log(data);
+    console.log(json);
   };
   return <></>;
 };

@@ -2,17 +2,19 @@ import Image from 'next/image';
 import s from './page.module.css';
 import ButtonStatus from '@/components/ButtonStatus/ButtonStatus';
 import InfoBanner from '@/components/InfoBanner/InfoBanner';
-import {host} from '@/utils/variables';
+import {credentialKey, host} from '@/utils/variables';
 import ClientLog from '@/components/ClientLog/ClientLog';
 
 const getDataStatus = async () => {
   let dataReturn = {};
   const res = await fetch(host + '/api/practice-status', {
-    next: {revalidate: 0},
+    cache: 'no-store',
+    headers: {credentialKey: credentialKey},
   });
-  const json = await res.json();
-
+  const json = await res.json();  
   const data = json.data;
+  // console.log(data);
+  
   return data;
 };
 
