@@ -104,6 +104,8 @@ export const POST = async (request: NextRequest) => {
 
     const jumlahWaktuSholat = Object.keys(jadwalSholatHarian).length;
     const waktuIstirahat = 20;
+    let praAdzan = '';
+    let istirahatSholat = ''
 
     //CHECK JAM BUKA
     for (let x = 0; x < jamPraktikBuka.length; x++) {
@@ -138,6 +140,8 @@ export const POST = async (request: NextRequest) => {
                 const miliPraAdzan = 10 * 60 //MENIT PER DETIK
                 const miliWaktuAdzan = parseInt(moment(waktuAdzan, 'HH:mm').format('X'))
                 const praWaktuAdzan = moment((miliWaktuAdzan - miliPraAdzan), 'X').format('HH:mm')
+                praAdzan = praWaktuAdzan;
+                istirahatSholat = waktuIstirahatSholat
 
                 //JIKA TIBA WAKTU SHOLAT MAKA TUTUP
                 if (thisTime >= praWaktuAdzan &&
@@ -161,9 +165,14 @@ export const POST = async (request: NextRequest) => {
     console.log("statusPractice " + statusPractice + moment.locale());
 
     const dataReturn = {
-        date: moment(body.time).utcOffset(7).format("DD-MM-YYYY"),
-        clock: thisTime,
-        waktuSholatHariIni: jadwalSholatHarian
+        time: moment(body.time).utcOffset(7).format(),
+        istirahatSholat: {
+            adzanHariIni: jadwalSholatHarian,
+            persiapanSholat: praAdzan,
+            istirahat: istirahatSholat,
+        },
+        status: statusPractice,
+        information: informasiDetail
     }
 
 

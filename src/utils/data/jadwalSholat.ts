@@ -1549,7 +1549,7 @@ export const jadwalSholatLamongan = {
         },
         5: {
             shubuh: '04:23',
-            dhuhur: '11:38',
+            dhuhur: '11:39',
             ashar: '15:00',
             magrib: '17:33',
             isya: '18:45'
@@ -1598,7 +1598,7 @@ export const jadwalSholatLamongan = {
         },
         12: {
             shubuh: '04:22',
-            dhuhur: '11:37',
+            dhuhur: '11:38',
             ashar: '14:59',
             magrib: '17:33',
             isya: '18:45'
@@ -1633,7 +1633,7 @@ export const jadwalSholatLamongan = {
         },
         17: {
             shubuh: '04:21',
-            dhuhur: '11:36',
+            dhuhur: '11:37',
             ashar: '14:58',
             magrib: '17:33',
             isya: '18:44'
@@ -1668,7 +1668,7 @@ export const jadwalSholatLamongan = {
         },
         22: {
             shubuh: '04:19',
-            dhuhur: '11:35',
+            dhuhur: '11:36',
             ashar: '14:56',
             magrib: '17:33',
             isya: '18:43'
@@ -1717,7 +1717,7 @@ export const jadwalSholatLamongan = {
         },
         29: {
             shubuh: '04:17',
-            dhuhur: '11:33',
+            dhuhur: '11:34',
             ashar: '14:53',
             magrib: '17:32',
             isya: '18:42'
