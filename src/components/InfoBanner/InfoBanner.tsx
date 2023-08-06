@@ -7,9 +7,7 @@ type Props = {
 const InfoBanner = (props: Props) => {
   return (
     <>
-      {!props.data?.information.includes('sholat') ? (
-        <></>
-      ) : (
+      {props.data?.information && props.data?.information.includes('sholat') ? (
         <div style={{marginTop: '10px'}}>
           <p
             style={{
@@ -22,6 +20,8 @@ const InfoBanner = (props: Props) => {
             {props.data?.information}
           </p>
         </div>
+      ) : (
+        <></>
       )}
     </>
   );
