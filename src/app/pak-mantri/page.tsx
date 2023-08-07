@@ -16,7 +16,7 @@ const Admin = (props: Props) => {
     });
     const json = await res.json();
     const data = json.data;
-    console.log(data);
+    // console.log(data);
 
     setJamPraktek(data);
   };
@@ -37,7 +37,7 @@ const Admin = (props: Props) => {
 
     const data = json.data;
 
-    console.log(data);
+    // console.log(data);
     setJamPraktek(data);
   };
 
@@ -51,7 +51,8 @@ const Admin = (props: Props) => {
 
     const data = json.data;
 
-    console.log(data);
+    // console.log(data);
+    setJamPraktek(data);
   };
 
   return (
