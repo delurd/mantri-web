@@ -22,10 +22,10 @@ const getDataStatus = async () => {
 };
 
 export default async function Home() {
-  const data = await getDataStatus();
+  const data = await getDataStatus();  
 
   return (
-    <main className={s.itemCenter + ' ' + s.main} style={{}}>
+    <main className={s.itemCenter + ' ' + s.main}>
       <div className={s.card}>
         <div style={{display: 'flex'}}>
           <div className={s.colTitle}>
@@ -36,7 +36,7 @@ export default async function Home() {
             <Image
               src="/Illustration-doctor.png"
               alt="illustration"
-              style={{position: 'absolute', bottom: 0, right: 0}}
+              style={{position: 'absolute', bottom: 0, left: 0}}
               width={150}
               height={170}
               priority

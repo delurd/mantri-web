@@ -7,7 +7,7 @@ type Props = {
 const InfoBanner = (props: Props) => {
   return (
     <>
-      {props.data?.information && props.data?.information.includes('sholat') ? (
+      {props.data?.information && props.data?.information.includes('Sholat') ? (
         <div style={{marginTop: '10px'}}>
           <p
             style={{

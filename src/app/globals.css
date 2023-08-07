@@ -105,3 +105,18 @@ a {
     color-scheme: dark;
   }
 }
+
+
+.main {
+  height: 100vh;
+  background-color: white;
+  background-image: url('/bg-patern.png');
+  background-repeat: repeat;
+  padding: 10px;
+}
+
+.itemCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -23,7 +23,7 @@ const ClientLog = (props: Props) => {
 
     const data = json.data;
 
-    console.log(json);
+    console.log(data);
   };
   return <></>;
 };

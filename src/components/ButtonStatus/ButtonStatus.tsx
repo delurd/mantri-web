@@ -18,7 +18,7 @@ const ButtonStatus = (props: Props) => {
           : {backgroundColor: '#EA8989', color: '#A64B4B'}
       }
     >
-      <b>{props?.status == 'open' ? 'BUKA' : 'TUTUP'}</b>
+      <b>PRAKTIK {props?.status == 'open' ? 'BUKA' : 'TUTUP'}</b>
     </div>
   );
 };
