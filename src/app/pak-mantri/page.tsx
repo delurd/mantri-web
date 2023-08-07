@@ -5,7 +5,7 @@ import {host} from '@/utils/variables';
 
 type Props = {};
 
-const page = (props: Props) => {
+const Admin = (props: Props) => {
   const [jamMulai, setJamMulai] = useState('00:00');
   const [jamAkhir, setJamAkhir] = useState('00:00');
   const [jamPraktek, setJamPraktek] = useState([]);
@@ -120,4 +120,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Admin;
