@@ -10,7 +10,7 @@ const getDataStatus = async () => {
   let dataReturn = {};
   const res = await fetch(host + '/api/practice-status', {
     method: 'POST',
-    // cache: 'no-store',
+    cache: 'no-store',
     headers: {credentialKey: credentialKey},
     body: JSON.stringify({time: moment().utcOffset(7).format()})
   });
