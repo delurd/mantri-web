@@ -1,7 +1,7 @@
 'use client';
 import React, {SyntheticEvent, useEffect, useState} from 'react';
 import s from './styles.module.css';
-import {host} from '@/utils/variables';
+import {credentialKey, host} from '@/utils/variables';
 
 type Props = {};
 
@@ -9,20 +9,26 @@ const Admin = (props: Props) => {
   const [jamMulai, setJamMulai] = useState('00:00');
   const [jamAkhir, setJamAkhir] = useState('00:00');
   const [jamPraktek, setJamPraktek] = useState([]);
+  const [manualStatus, setManualStatus] = useState(false);
+  const [loadingSetManualStatus, setLoadingSetManualStatus] = useState(false);
 
   const getJamPraktek = async () => {
+    console.time('jadwal');
+
     const res = await fetch(host + '/api/data-jadwal', {
-      headers: {credentialKey: 'credentialKey'},
+      headers: {credentialKey},
     });
     const json = await res.json();
     const data = json.data;
     // console.log(data);
 
     setJamPraktek(data);
+    console.timeEnd('jadwal');
   };
 
   useEffect(() => {
     getJamPraktek();
+    getManualStatus();
   }, []);
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -30,7 +36,7 @@ const Admin = (props: Props) => {
 
     const res = await fetch(host + '/api/data-jadwal', {
       method: 'POST',
-      headers: {credentialKey: 'credentialKey'},
+      headers: {credentialKey},
       body: JSON.stringify({startAt: jamMulai, endAt: jamAkhir}),
     });
     const json = await res.json();
@@ -44,7 +50,7 @@ const Admin = (props: Props) => {
   const handleDelete = async (id: string) => {
     const res = await fetch(host + '/api/data-jadwal', {
       method: 'DELETE',
-      headers: {credentialKey: 'credentialKey'},
+      headers: {credentialKey},
       body: JSON.stringify({id}),
     });
     const json = await res.json();
@@ -53,6 +59,43 @@ const Admin = (props: Props) => {
 
     // console.log(data);
     setJamPraktek(data);
+  };
+
+  const handleManual = async (status: boolean) => {
+    setLoadingSetManualStatus(true);
+    try {
+      const res = await fetch(host + '/api/use-status-manual', {
+        method: 'POST',
+        headers: {credentialKey},
+        body: JSON.stringify({status}),
+      });
+      const json = await res.json();
+      const data = json.data;
+
+      setManualStatus(status);
+      setLoadingSetManualStatus(false);
+    } catch (error) {
+      console.log(error);
+      setLoadingSetManualStatus(false);
+    }
+  };
+
+  const getManualStatus = async () => {
+    console.time('status');
+
+    const res = await fetch(host + '/api/use-status-manual', {
+      method: 'GET',
+      headers: {credentialKey},
+    });
+    const json = await res.json();
+    const data = json.data;
+
+    // console.log(json);
+    console.timeEnd('status');
+
+    if (json.message == 'failed') return;
+
+    setManualStatus(data);
   };
 
   return (
@@ -115,6 +158,20 @@ const Admin = (props: Props) => {
                 </div>
               ))
             : null}
+        </div>
+      </div>
+      <br />
+      <div style={{backgroundColor: '#68b3dd', padding: '20px'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between'}}>
+          <h3>Manual</h3>
+          <input
+            type="checkbox"
+            checked={manualStatus}
+            disabled={loadingSetManualStatus}
+            onChange={(e) => {
+              handleManual(e.target.checked);
+            }}
+          ></input>
         </div>
       </div>
     </main>

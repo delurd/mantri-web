@@ -16,8 +16,9 @@ const ClientLog = (props: Props) => {
   const getDataStatus = async () => {
     const res = await fetch(host + '/api/practice-status', {
       method: 'POST',
+      cache: 'no-store',
       headers: {credentialKey: 'credentialKey'},
-      body: JSON.stringify({time: moment().utcOffset(7).format()})
+      body: JSON.stringify({time: moment().utcOffset(7).format()}),
     });
     const json = await res.json();
 

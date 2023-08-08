@@ -11,7 +11,7 @@ moment.locale('id')
 export const GET = async (request: NextRequest, response: Response) => {
     const cred = request.headers.get("credentialKey")
     // console.log(credentialKey);
-    if (!cred || cred !== credentialKey) return NextResponse.json({}, { status: 403 })
+    if (!cred || cred !== credentialKey) return NextResponse.json({}, { status: 401 })
 
 
     let statusPractice: 'close' | 'open' = 'close'
