@@ -2,8 +2,8 @@ import React from 'react';
 
 type Props = {};
 
-const layout = (props: Props) => {
+const Layout = (props: Props) => {
   return <main></main>;
 };
 
-export default layout;
+export default Layout;

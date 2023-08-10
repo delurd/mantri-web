@@ -9,7 +9,7 @@ import Loader from '@/components/Loader/Loader';
 
 type Props = {};
 
-const page = (props: Props) => {
+const Login = (props: Props) => {
   const router = useRouter();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -70,4 +70,4 @@ const page = (props: Props) => {
   );
 };
 
-export default page;
+export default Login;
