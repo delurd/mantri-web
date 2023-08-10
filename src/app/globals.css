@@ -113,6 +113,7 @@ a {
   background-image: url('/bg-patern.png');
   background-repeat: repeat;
   padding: 10px;
+  overflow-y: auto;
 }
 
 .itemCenter {

@@ -2,9 +2,10 @@ import moment from "moment";
 import { NextRequest, NextResponse } from "next/server"
 import { jadwalSholatLamongan } from "@/utils/data/jadwalSholat";
 import 'moment/locale/id';
-import { jamPraktikBuka } from "@/utils/data/jamPraktik";
+import { jamPraktikBuka, jamPraktikType } from "@/utils/data/jamPraktik";
 import { info } from "@/utils/data/information";
 import { credentialKey } from "@/utils/variables";
+import { kv } from "@vercel/kv";
 
 moment.locale('id')
 
@@ -89,11 +90,30 @@ export const GET = async (request: NextRequest, response: Response) => {
 
 export const POST = async (request: NextRequest) => {
     const body = await request.json()
-    console.log('post');
-    console.log(body);
+    // console.log('post');
+    // console.log(body);
 
+    if (!body.time) return NextResponse.json({ message: 'failed', error: [{ role: 'time', message: 'datetime required' }] }, { status: 400 })
     let statusPractice: 'close' | 'open' = 'close'
     let informasiDetail = ''
+
+    const isManual = await kv.get('manualStatus')
+    if (isManual) {
+        const manualStatusPractice = await kv.get('manualStatusPractice')
+
+        informasiDetail = manualStatusPractice == 'open' ? 'Praktik Buka' : 'Praktik Tutup'
+
+        const dataReturn = {
+            time: moment(body.time).utcOffset(7).format(),
+            status: manualStatusPractice,
+            information: informasiDetail
+        }
+        return NextResponse.json({ message: 'success', data: dataReturn }, { status: 200 })
+    }
+
+
+    //GET DATA JAM PRAKTIK FROM DB
+    const jamPraktik: jamPraktikType[] = await kv.get('jamPraktikBuka') ?? jamPraktikBuka
 
     const thisMonth: number = parseInt(moment(body.time).utcOffset(7).format("M"));
     const thisDay: number = parseInt(moment(body.time).utcOffset(7).format("D"));
@@ -108,8 +128,8 @@ export const POST = async (request: NextRequest) => {
     let istirahatSholat = ''
 
     //CHECK JAM BUKA
-    for (let x = 0; x < jamPraktikBuka.length; x++) {
-        const jamBuka = jamPraktikBuka[x]
+    for (let x = 0; x < jamPraktik.length; x++) {
+        const jamBuka = jamPraktik[x]
 
         // console.log('jam buka ' + jamBuka.start);
 

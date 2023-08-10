@@ -1,7 +1,145 @@
+.inputClock {
+  /* width: 55px; */
+  font-size: 20px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  /* background-color: #ccc; */
+  border: none;
+}
 
+.card {
+  /* background-color: #BAF1FD; */
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  color: black;
+  border: 2px solid #68b3dd;
+  box-shadow: 0 15px 40px rgba(186, 241, 253, 1);
+  flex-wrap: wrap;
+  display: block;
+}
 
-.inputClock{
-    /* width: 55px; */
-    font-size:20px;
-    padding: 5px;
+.containerBox {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 40px;
+  max-width: 600px;
+}
+
+.menuBar {
+  position: absolute;
+  transform: translate(50%, 0);
+  bottom: 20px;
+  right: 50%;
+}
+
+.menuContainer {
+  background-color: white;
+  padding: 5px;
+  color: #000;
+  box-shadow: 0 15px 40px rgba(186, 241, 253, 1);
+  border-radius: 50px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  color: #68b3dd;
+  font-weight: bold;
+}
+
+.menuItem {
+  padding: 10px 15px;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menuItem:hover {
+  opacity: 0.7;
+}
+
+.itemActive {
+  background-color: #68b3dd;
+  color: white;
+}
+
+.buttonDelete {
+  /* padding: 5px 10px; */
+  /* display: flex;
+    align-items: center;
+    justify-content: center; */
+  width: 25px;
+  height: 25px;
+  border-radius: 50px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #ccc;
+}
+
+.buttonDelete:hover {
+  background-color: #cf6074;
+}
+
+.buttonDelete > span {
+  width: 35%;
+  height: 2px;
+  background-color: white;
+}
+
+.switchStatus {
+  display: flex;
+  border-radius: 100px;
+  background-color: #eee;
+  position: relative;
+  transition: 0.3s;
+}
+.switchItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ccc;
+  z-index: 5;
+}
+.switchStatus::before {
+  content: '';
+  background-color: #68b3dd;
+  border-radius: 50px;
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  left: 0%;
+  z-index: 0;
+  transition: 0.3s;
+}
+
+.switchItem.switchActive {
+  /* background-color: #68B3DD; */
+  color: white;
+}
+
+.buttonLogout {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px 0 0 0px;
+  opacity: 0.4;
+  line-height: 12px;
+}
+.buttonLogout:hover {
+  opacity: 1;
+}
+
+@media screen and (max-width: 600px) {
+  /* .containerBox {
+        flex-direction: column;
+    } */
 }

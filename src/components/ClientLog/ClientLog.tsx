@@ -8,9 +8,9 @@ type Props = {};
 
 const ClientLog = (props: Props) => {
   useEffect(() => {
-    getDataStatus();
-    console.log(moment().utcOffset(0).format());
-    console.log(moment().format() + '--' + moment.locale());
+    // getDataStatus();
+    // console.log(moment().utcOffset(0).format());
+    // console.log(moment().format() + '--' + moment.locale());
   }, []);
 
   const getDataStatus = async () => {

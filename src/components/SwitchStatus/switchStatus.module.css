@@ -1,0 +1,35 @@
+.switchStatus {
+  display: flex;
+  border-radius: 100px;
+  background-color: #eee;
+  position: relative;
+  transition: 0.3s;
+}
+.switchItem {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  color: #ccc;
+  z-index: 5;
+}
+/* .switchStatus::before {
+  content: '';
+  background-color: #68b3dd;
+  border-radius: 50px;
+  height: 100%;
+  width: 50%;
+  position: absolute;
+  left: 0%;
+  z-index: 0;
+  transition: 0.3s;
+} */
+
+.switchItem.switchActive {
+  background-color: #68B3DD;
+  color: white;
+}

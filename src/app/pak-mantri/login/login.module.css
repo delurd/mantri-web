@@ -1,0 +1,40 @@
+.login {
+  background-color: #baf1fd;
+  padding: 30px;
+  border-radius: 30px;
+}
+
+.login h1 {
+  margin-bottom: 30px;
+  color: #68b3dd;
+}
+
+.login input {
+  display: block;
+  background-color: white;
+  border: 2px solid transparent;
+  color: #68b3dd;
+  padding: 10px;
+  border-radius: 10px;
+  outline: none;
+  font-size: medium;
+  font-weight: 600;
+}
+.login input::placeholder {
+  color: #68b3dd4f;
+}
+
+.login input:focus {
+  display: block;
+  background-color: white;
+  border: 2px solid #68b3dd;
+}
+
+.login button {
+  width: 100%;
+  font-weight: bold;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
