@@ -22,6 +22,7 @@ const Admin = (props: Props) => {
   const [manualStatus, setManualStatus] = useState(false);
   const [loadingSetManualStatus, setLoadingSetManualStatus] = useState(false);
   const [manualStatusPractice, setManualStatusPractice] = useState('');
+  const [doorSensorStatus, setDoorSensorStatus] = useState(false);
 
   const [hashPage, setHashPage] = useState<string>('otomatis');
 
@@ -61,6 +62,19 @@ const Admin = (props: Props) => {
     setStatusPraktik(data?.status);
   };
 
+  const getDoorSensorStatus = async () => {
+    const res = await fetch(host + '/api/door-sensor-status', {
+      headers: {credentialKey},
+    });
+    const json = await res.json();
+
+    if (json.message !== 'success') return;
+
+    const data = json.data;
+
+    setDoorSensorStatus(data);
+  };
+
   const getManualStatusPractice = async () => {
     const res = await fetch(host + '/api/use-status-manual/practice-status', {
       headers: {credentialKey},
@@ -97,6 +111,7 @@ const Admin = (props: Props) => {
     getManualStatus();
     getDataStatus();
     getManualStatusPractice();
+    getDoorSensorStatus();
   }, []);
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -295,6 +310,28 @@ const Admin = (props: Props) => {
             </button> */}
             <Button onClick={handleSubmit}>Submit</Button>
           </form>
+        </div>
+        <div className={s.card}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <h3>Sensor Pintu</h3>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              {loadingSetManualStatus ? <Loader scale="0.3" /> : <></>}
+              <Switch scale="0.7" />
+            </div>
+          </div>
+          <br />
+          <div>
+            <SwitchStatus
+              status={doorSensorStatus ? 'open' : 'close'}
+              getStatus={(value) => {}}
+            />
+          </div>
         </div>
       </>
     );

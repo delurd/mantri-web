@@ -6,8 +6,8 @@ import { NextResponse } from 'next/server';
 import { SyntheticEvent } from 'react';
 
 export async function createCookies(name: string, value: string) {
-    const fullMonth = 30 * 24 * 60 * 60 * 1000
-    cookies().set(name, value, { expires: Date.now() - fullMonth })
+    const fullMonth = 60 * 60 * 1000
+    cookies().set(name, value, { maxAge: fullMonth })
 }
 
 export async function removeCookies(name: string) {

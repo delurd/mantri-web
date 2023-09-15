@@ -10,7 +10,7 @@ type Props = {
 
 const ButtonStatus = (props: Props) => {
   return (
-    <div
+    <div 
       className={s.statusButton}
       style={
         props?.status == 'open'
