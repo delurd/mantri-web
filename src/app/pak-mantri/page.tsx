@@ -23,6 +23,7 @@ const Admin = (props: Props) => {
   const [loadingSetManualStatus, setLoadingSetManualStatus] = useState(false);
   const [manualStatusPractice, setManualStatusPractice] = useState('');
   const [doorSensorStatus, setDoorSensorStatus] = useState(false);
+  const [isSensorOnline, setIsSensorOnline] = useState('');
 
   const [hashPage, setHashPage] = useState<string>('otomatis');
 
@@ -105,6 +106,47 @@ const Admin = (props: Props) => {
     setManualStatusPractice(data.status);
     setStatusPraktik(data.status);
   };
+  const getSensorOnline = async () => {
+    console.log('ini response door sensor');
+
+    try {
+      const res = await fetch('http://192.168.134.88/status', {
+        mode: 'no-cors',
+        method: 'GET',
+      });
+
+      setIsSensorOnline('Online');
+    } catch (error) {
+      setIsSensorOnline('Offline');
+    }
+    console.log('ini response door sensor end');
+
+    // try {
+    //   console.log('mulai');
+
+    //   const socket = new WebSocket('ws://192.168.134.88:80');
+
+    //   socket.onopen = (event) => {
+    //     setIsSensorOnline('Online');
+    //     console.log(new Date());
+    //   };
+
+    //   socket.onclose = (event) => {
+    //     console.log('diconnect');
+    //     console.log(new Date());
+    //     setIsSensorOnline('Offline');
+
+    //     setTimeout(function () {
+    //       getSensorOnline();
+    //     }, 60000);
+    //   };
+
+    //   console.log('selesai');
+
+    // } catch (error) {
+    //   setIsSensorOnline('Offline');
+    // }
+  };
 
   useEffect(() => {
     getJamPraktek();
@@ -112,6 +154,7 @@ const Admin = (props: Props) => {
     getDataStatus();
     getManualStatusPractice();
     getDoorSensorStatus();
+    getSensorOnline();
   }, []);
 
   const handleSubmit = async (e: SyntheticEvent) => {
@@ -180,6 +223,29 @@ const Admin = (props: Props) => {
     if (json.message == 'failed') return;
 
     setManualStatus(data);
+  };
+
+  const handleSensorManual = async (status: boolean) => {
+    try {
+      const res = await fetch(host + '/api/door-sensor-status/set-usage', {
+        method: 'POST',
+        headers: {credentialKey},
+        body: JSON.stringify({status}),
+      });
+    } catch (error) {}
+  };
+
+  const getSensorManual = async () => {
+    try {
+      const res = await fetch(host + '/api/door-sensor-status/set-usage', {
+        method: 'GET',
+        headers: {credentialKey},
+      });
+
+      const json = await res.json();
+
+      console.log(json);
+    } catch (error) {}
   };
 
   const _Manualpage = () => {
@@ -281,7 +347,7 @@ const Admin = (props: Props) => {
           <br />
           <form>
             <div>
-              <label htmlFor="">Mulai</label>
+              <label htmlFor="">Mulai :</label>
               <br />
               <input
                 value={jamMulai}
@@ -293,7 +359,7 @@ const Admin = (props: Props) => {
               ></input>
             </div>
             <div>
-              <label htmlFor="">Berakhir</label>
+              <label htmlFor="">Berakhir :</label>
               <br />
               <input
                 type="time"
@@ -322,11 +388,24 @@ const Admin = (props: Props) => {
             <h3>Sensor Pintu</h3>
             <div style={{display: 'flex', alignItems: 'center'}}>
               {loadingSetManualStatus ? <Loader scale="0.3" /> : <></>}
-              <Switch scale="0.7" />
+              <Switch checked scale="0.7" onChange={() => {}} />
             </div>
           </div>
+          {isSensorOnline ? (
+            <p
+              style={{
+                fontSize: '14px',
+                color: isSensorOnline == 'Online' ? '#4BA65FCF' : '#EA8989',
+              }}
+            >
+              {isSensorOnline}
+            </p>
+          ) : (
+            <Loader size={12} />
+          )}
           <br />
           <div>
+            <p style={{marginBottom: '5px', color: 'grey'}}>Status :</p>
             <SwitchStatus
               status={doorSensorStatus ? 'open' : 'close'}
               getStatus={(value) => {}}

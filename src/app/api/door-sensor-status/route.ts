@@ -14,7 +14,7 @@ export const GET = async (request: NextRequest) => {
 
     }
 
-    return NextResponse.json({ message: 'failed' }, { status: 401 })
+    return NextResponse.json({ message: 'failed' }, { status: 400 })
 
 }
 
@@ -29,7 +29,7 @@ export const POST = async (request: NextRequest) => {
     const doorStatus = json?.doorStatus;
     // console.log('door ' + doorStatus);
 
-    if (iotKey !== iotCredentialKey && doorStatus !== undefined) return NextResponse.json({ message: 'failed' }, { status: 404 })
+    if (iotKey !== iotCredentialKey && doorStatus !== undefined) return NextResponse.json({ message: 'failed' }, { status: 403 })
 
     let isDoorOpen = doorStatus == 'open' ? true : false;
     await kv.set('doorStatus', isDoorOpen)

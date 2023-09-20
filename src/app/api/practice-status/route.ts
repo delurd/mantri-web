@@ -6,6 +6,7 @@ import { jamPraktikBuka, jamPraktikType } from "@/utils/data/jamPraktik";
 import { info } from "@/utils/data/information";
 import { credentialKey } from "@/utils/variables";
 import { kv } from "@vercel/kv";
+import { getKvDoorSensorOnline, getKvDoorStatus } from "../action";
 
 moment.locale('id')
 
@@ -92,10 +93,10 @@ export const POST = async (request: NextRequest) => {
     const body = await request.json()
     // console.log('post');
     // console.log(body);
-
     if (!body.time) return NextResponse.json({ message: 'failed', error: [{ role: 'time', message: 'datetime required' }] }, { status: 400 })
     let statusPractice: 'close' | 'open' = 'close'
     let informasiDetail = ''
+
 
     const isManual = await kv.get('manualStatus')
     if (isManual) {
@@ -110,6 +111,21 @@ export const POST = async (request: NextRequest) => {
         }
         return NextResponse.json({ message: 'success', data: dataReturn }, { status: 200 })
     }
+
+
+    // const doorSensorOnline = await getKvDoorSensorOnline();
+    // if (doorSensorOnline) {
+
+    //     const doorSensor = await getKvDoorStatus();
+    //     if (!doorSensor) {
+    //         const dataReturn = {
+    //             time: moment(new Date()).utcOffset(7).format(),
+    //             status: "close",
+    //         }
+
+    //         return NextResponse.json({ message: 'success', data: dataReturn }, { status: 200 })
+    //     }
+    // }
 
 
     //GET DATA JAM PRAKTIK FROM DB
