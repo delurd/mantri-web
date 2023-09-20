@@ -71,6 +71,8 @@ const Admin = (props: Props) => {
 
     if (json.message !== 'success') return;
 
+    console.log(json);
+    
     const data = json.data;
 
     setDoorSensorStatus(data);
@@ -154,7 +156,7 @@ const Admin = (props: Props) => {
     getDataStatus();
     getManualStatusPractice();
     getDoorSensorStatus();
-    getSensorOnline();
+    // getSensorOnline();
   }, []);
 
   const handleSubmit = async (e: SyntheticEvent) => {
