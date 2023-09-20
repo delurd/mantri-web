@@ -107,45 +107,45 @@ const Admin = (props: Props) => {
     setStatusPraktik(data.status);
   };
   const getSensorOnline = async () => {
-    console.log('ini response door sensor');
-
-    try {
-      const res = await fetch('https://192.168.134.88/status', {
-        mode: 'no-cors',
-        method: 'GET',
-      });
-
-      setIsSensorOnline('Online');
-    } catch (error) {
-      setIsSensorOnline('Offline');
-    }
-    console.log('ini response door sensor end');
+    // console.log('ini response door sensor');
 
     // try {
-    //   console.log('mulai');
+    //   const res = await fetch('https://192.168.134.88/status', {
+    //     mode: 'no-cors',
+    //     method: 'GET',
+    //   });
 
-    //   const socket = new WebSocket('ws://192.168.134.88:80');
-
-    //   socket.onopen = (event) => {
-    //     setIsSensorOnline('Online');
-    //     console.log(new Date());
-    //   };
-
-    //   socket.onclose = (event) => {
-    //     console.log('diconnect');
-    //     console.log(new Date());
-    //     setIsSensorOnline('Offline');
-
-    //     setTimeout(function () {
-    //       getSensorOnline();
-    //     }, 60000);
-    //   };
-
-    //   console.log('selesai');
-
+    //   setIsSensorOnline('Online');
     // } catch (error) {
     //   setIsSensorOnline('Offline');
     // }
+    // console.log('ini response door sensor end');
+
+    try {
+      console.log('mulai');
+
+      const socket = new WebSocket('ws://192.168.134.88:80');
+
+      socket.onopen = (event) => {
+        setIsSensorOnline('Online');
+        console.log(new Date());
+      };
+
+      socket.onclose = (event) => {
+        console.log('diconnect');
+        console.log(new Date());
+        setIsSensorOnline('Offline');
+
+        setTimeout(function () {
+          getSensorOnline();
+        }, 60000);
+      };
+
+      console.log('selesai');
+
+    } catch (error) {
+      setIsSensorOnline('Offline');
+    }
   };
 
   useEffect(() => {
