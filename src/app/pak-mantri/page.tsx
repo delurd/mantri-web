@@ -110,7 +110,7 @@ const Admin = (props: Props) => {
     console.log('ini response door sensor');
 
     try {
-      const res = await fetch('http://192.168.134.88/status', {
+      const res = await fetch('https://192.168.134.88/status', {
         mode: 'no-cors',
         method: 'GET',
       });
