@@ -58,17 +58,7 @@ const setKvDataJadwal = async (value: any[]) => {
 
 
 const cekSocketConnection = async () => {
-    try {
-        const socket = new WebSocket('ws://192.168.134.88:81')
-
-        socket.onopen = event => {
-
-        }
-
-
-    } catch (error) {
-
-    }
+   
 }
 
 

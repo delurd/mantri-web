@@ -120,6 +120,32 @@ const Admin = (props: Props) => {
       setIsSensorOnline('Offline');
     }
     console.log('ini response door sensor end');
+
+    // try {
+    //   console.log('mulai');
+
+    //   const socket = new WebSocket('ws://192.168.134.88:80');
+
+    //   socket.onopen = (event) => {
+    //     setIsSensorOnline('Online');
+    //     console.log(new Date());
+    //   };
+
+    //   socket.onclose = (event) => {
+    //     console.log('diconnect');
+    //     console.log(new Date());
+    //     setIsSensorOnline('Offline');
+
+    //     setTimeout(function () {
+    //       getSensorOnline();
+    //     }, 60000);
+    //   };
+
+    //   console.log('selesai');
+
+    // } catch (error) {
+    //   setIsSensorOnline('Offline');
+    // }
   };
 
   useEffect(() => {
