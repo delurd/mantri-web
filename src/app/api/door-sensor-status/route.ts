@@ -5,7 +5,7 @@ import moment from "moment";
 import { doorSensorLastUpdate, getDoorSensorLastUpdate, setDoorSensorLastUpdate } from "@/utils/data/doorSendor";
 
 
-let doorSensorUpdate = 'date'
+let doorSensorUpdate: any = 'date'
 
 export const GET = async (request: NextRequest) => {
     const heders = request.headers
@@ -31,7 +31,7 @@ export const POST = async (request: NextRequest) => {
     const getDate = heders.get("date")
 
     // setDoorSensorLastUpdate(getDate ?? '');
-    doorSensorUpdate = getDate ?? ''
+    doorSensorUpdate = new Date();
     console.log(moment(getDate).format('X'));
 
 
