@@ -1,8 +1,8 @@
 import { kv } from "@vercel/kv";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 
-export const GET = async (request: NextResponse) => {
+export const GET = async (request: NextRequest) => {
     try {
         const res = await kv.get("doorSensorUsage");
 
@@ -14,7 +14,7 @@ export const GET = async (request: NextResponse) => {
 }
 
 
-export const POST = async (request: NextResponse) => {
+export const POST = async (request: NextRequest) => {
     const body = await request.json()
 
     const status = body.status;
