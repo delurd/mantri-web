@@ -60,6 +60,8 @@ const Admin = (props: Props) => {
     if (json.message == 'failed') return;
 
     const data = json.data;
+
+    console.log(data);
     setStatusPraktik(data?.status);
   };
 
@@ -72,8 +74,13 @@ const Admin = (props: Props) => {
     if (json.message !== 'success') return;
 
     console.log(json);
-    
+
     const data = json.data;
+    const time = json.time;
+    const isOnline =
+      parseInt(moment(time, 'HH:mm:ss').format('HH')) - new Date().getHours();
+
+    setIsSensorOnline(isOnline ? 'Offline' : 'Online');
 
     setDoorSensorStatus(data);
   };
@@ -108,6 +115,7 @@ const Admin = (props: Props) => {
     setManualStatusPractice(data.status);
     setStatusPraktik(data.status);
   };
+
   const getSensorOnline = async () => {
     console.log('ini response door sensor');
 
@@ -409,6 +417,7 @@ const Admin = (props: Props) => {
           <div>
             <p style={{marginBottom: '5px', color: 'grey'}}>Status :</p>
             <SwitchStatus
+              disabled={!isSensorOnline}
               status={doorSensorStatus ? 'open' : 'close'}
               getStatus={(value) => {}}
             />

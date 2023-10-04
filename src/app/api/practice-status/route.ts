@@ -201,7 +201,7 @@ export const POST = async (request: NextRequest) => {
     console.log("statusPractice " + statusPractice + moment.locale());
 
     const dataReturn = {
-        time: moment(body.time).utcOffset(7).format(),
+        time: moment(new Date()).utcOffset(7).format(),
         istirahatSholat: {
             adzanHariIni: jadwalSholatHarian,
             persiapanSholat: praAdzan,
