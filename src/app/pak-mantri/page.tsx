@@ -66,28 +66,32 @@ const Admin = (props: Props) => {
   };
 
   const getDoorSensorStatus = async () => {
-    try {
-      const res = await fetch(host + '/api/door-sensor-status', {
-        headers: {credentialKey},
+    console.log('get sensor');
+
+    await fetch(host + '/api/door-sensor-status', {
+      headers: {credentialKey},
+    })
+      .then(async (res) => {
+        const json = await res.json();
+
+        if (json.message !== 'success') return;
+
+        console.log(json);
+
+        const data = json.data;
+        const time = json.time;
+        const isOnline =
+          parseInt(moment(time, 'HH:mm:ss').format('HH')) -
+          new Date().getHours();
+
+        setIsSensorOnline(isOnline ? 'Offline' : 'Online');
+
+        setDoorSensorStatus(data);
+      })
+      .catch((error) => {
+        console.log('error get door status');
+        console.log(error);
       });
-      const json = await res.json();
-
-      if (json.message !== 'success') return;
-
-      console.log(json);
-
-      const data = json.data;
-      const time = json.time;
-      const isOnline =
-        parseInt(moment(time, 'HH:mm:ss').format('HH')) - new Date().getHours();
-
-      setIsSensorOnline(isOnline ? 'Offline' : 'Online');
-
-      setDoorSensorStatus(data);
-    } catch (error) {
-      console.log('error get door status');
-      console.log(error);
-    }
   };
 
   const getManualStatusPractice = async () => {
