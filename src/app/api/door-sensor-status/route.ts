@@ -12,9 +12,9 @@ export const GET = async (request: NextRequest) => {
 
     try {
         // const statusDoor = await kv.get('doorStatus')
-        // const statusDoor = await prisma.doorStatus.findUnique({ where: { id: 1 } })
+        const statusDoor = await prisma.doorStatus.findUnique({ where: { id: 1 } })
 
-        return NextResponse.json({ message: 'success', data: true, time: "13:00:20" }, { status: 200 })
+        return NextResponse.json({ message: 'success', data: statusDoor?.status, time: statusDoor?.time }, { status: 200 })
     } catch (error) {
 
     }
