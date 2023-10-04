@@ -75,9 +75,9 @@ const Admin = (props: Props) => {
         const json = await res.json();
 
         console.log("sensor then");
+        console.log(res);
         if (json.message !== 'success') return;
 
-        console.log(json);
 
         const data = json.data;
         const time = json.time;
