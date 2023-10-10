@@ -82,7 +82,8 @@ export const cekIsSensorOnline = async (time: string) => {
     const batas = 800 //14mnt
     const calculateGap =
         parseInt(moment(time, 'HH:mm:ss').format('X')) - parseInt(moment(new Date()).format('X'));
-
+    console.log(calculateGap + "<<<<<<<<<<<<<<<<<<<<<<");
+    
     if ((calculateGap * -1) < batas) { return true }
 
     return false

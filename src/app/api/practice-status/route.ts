@@ -33,13 +33,15 @@ export const POST = async (request: NextRequest) => {
         }
         return NextResponse.json({ message: 'success', data: dataReturn }, { status: 200 })
     }
-
+    console.log("HELOOOOOOO");
+    
     //CEK IF SENSOR ONLINE AND DOOR SENSOR CLOSE
     try {
         const statusDoor = await prisma.doorStatus.findUnique({ where: { id: 1 } })
 
         const isOnline = await cekIsSensorOnline(statusDoor?.time ?? "00:00:00")
-
+        console.log(isOnline + "isonlien");
+        
         if (isOnline) {
             if (statusDoor?.status) {
                 //IS OPEN CEK PRAYER TIME
