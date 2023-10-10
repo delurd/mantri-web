@@ -36,14 +36,13 @@ export const cekIsPrayerTime = () => {
         const praWaktuAdzan = moment((miliWaktuAdzan - miliPraAdzan), 'X').format('HH:mm')
         praAdzan = praWaktuAdzan;
         istirahatSholat = waktuIstirahatSholat
-
         //JIKA TIBA WAKTU SHOLAT MAKA TUTUP
         if (thisTime >= praWaktuAdzan &&
             thisTime <= waktuIstirahatSholat
         ) {
             return true
-        } else {
-            return false
         }
     }
+
+    return false
 }
