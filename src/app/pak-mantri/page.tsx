@@ -79,6 +79,12 @@ const Admin = (props: Props) => {
     const time = json.time;
 
     const isOnline = await cekIsSensorOnline(time);
+    console.log('Sensor Online ' + isOnline);
+    console.log(
+      moment(time, 'HH:mm:ss').format('X') +
+        ' <' +
+        parseInt(moment(new Date()).format('X'))
+    );
 
     setIsSensorOnline(isOnline ? 'Online' : 'Offline');
 
