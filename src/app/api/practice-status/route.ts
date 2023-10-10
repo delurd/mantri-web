@@ -6,9 +6,12 @@ import { jamPraktikBuka, jamPraktikType } from "@/utils/data/jamPraktik";
 import { info } from "@/utils/data/information";
 import { credentialKey } from "@/utils/variables";
 import { kv } from "@vercel/kv";
-import { getKvDoorSensorOnline, getKvDoorStatus } from "../action";
+import { PrismaClient } from "@prisma/client";
+import { cekIsSensorOnline } from "@/app/action";
+import { cekIsPrayerTime } from "./action";
 
 moment.locale('id')
+const prisma = new PrismaClient();
 
 export const GET = async (request: NextRequest, response: Response) => {
     const cred = request.headers.get("credentialKey")
@@ -91,13 +94,11 @@ export const GET = async (request: NextRequest, response: Response) => {
 
 export const POST = async (request: NextRequest) => {
     const body = await request.json()
-    // console.log('post');
-    // console.log(body);
     if (!body.time) return NextResponse.json({ message: 'failed', error: [{ role: 'time', message: 'datetime required' }] }, { status: 400 })
     let statusPractice: 'close' | 'open' = 'close'
     let informasiDetail = ''
 
-
+    //CEK IF USING MANUAL
     const isManual = await kv.get('manualStatus')
     if (isManual) {
         const manualStatusPractice = await kv.get('manualStatusPractice')
@@ -112,20 +113,38 @@ export const POST = async (request: NextRequest) => {
         return NextResponse.json({ message: 'success', data: dataReturn }, { status: 200 })
     }
 
+    //CEK IF SENSOR ONLINE AND DOOR SENSOR CLOSE
+    try {
+        const statusDoor = await prisma.doorStatus.findUnique({ where: { id: 1 } })
 
-    // const doorSensorOnline = await getKvDoorSensorOnline();
-    // if (doorSensorOnline) {
+        const isOnline = await cekIsSensorOnline(statusDoor?.time ?? "00:00:00")
 
-    //     const doorSensor = await getKvDoorStatus();
-    //     if (!doorSensor) {
-    //         const dataReturn = {
-    //             time: moment(new Date()).utcOffset(7).format(),
-    //             status: "close",
-    //         }
+        if (isOnline) {
+            if (statusDoor?.status) {
+                const isPrayerTime = cekIsPrayerTime()
+                // JIKA TIBA WAKTU SHOLAT MAKA TUTUP
+                if (isPrayerTime) {
+                    statusPractice = 'close'
+                    informasiDetail = info.sholat
+                } else {
+                    statusPractice = 'open'
+                }
+            } else {
+                statusPractice = 'close'
+            }
 
-    //         return NextResponse.json({ message: 'success', data: dataReturn }, { status: 200 })
-    //     }
-    // }
+            const dataReturn = {
+                time: moment(new Date()).utcOffset(7).format(),
+                status: statusPractice,
+                information: informasiDetail
+            }
+
+            return NextResponse.json({ message: 'success', data: dataReturn }, { status: 200 })
+        }
+        console.log("OFLINEEEEE")
+    } catch (error) {
+
+    }
 
 
     //GET DATA JAM PRAKTIK FROM DB
@@ -157,38 +176,46 @@ export const POST = async (request: NextRequest) => {
             informasiDetail = info.buka
 
             //CHECK WAKTU ADZAN
-            for (let i = 0; i < jumlahWaktuSholat; i++) {
-                const waktuAdzan = Object.values(jadwalSholatHarian)[i]
-                let waktuAdzanHour = parseInt(waktuAdzan.split(':')[0])
-                let waktuAdzanMinute = parseInt(waktuAdzan.split(':')[1])
+            // for (let i = 0; i < jumlahWaktuSholat; i++) {
+            //     const waktuAdzan = Object.values(jadwalSholatHarian)[i]
+            //     let waktuAdzanHour = parseInt(waktuAdzan.split(':')[0])
+            //     let waktuAdzanMinute = parseInt(waktuAdzan.split(':')[1])
 
-                //CALCULATE WAKTU ISTIRAHAT SHOLAT
-                let waktuIstirahatSholatHour = waktuAdzanHour
-                let waktuIstirahatSholatMinutes = waktuAdzanMinute + waktuIstirahat
+            //     //CALCULATE WAKTU ISTIRAHAT SHOLAT
+            //     let waktuIstirahatSholatHour = waktuAdzanHour
+            //     let waktuIstirahatSholatMinutes = waktuAdzanMinute + waktuIstirahat
 
-                if (waktuIstirahatSholatMinutes > 59) {
-                    waktuIstirahatSholatMinutes -= 60
-                    waktuIstirahatSholatHour += 1
-                }
-                const waktuIstirahatSholat = moment((waktuIstirahatSholatHour + ':' + waktuIstirahatSholatMinutes), 'h:m').format('HH:mm')
+            //     if (waktuIstirahatSholatMinutes > 59) {
+            //         waktuIstirahatSholatMinutes -= 60
+            //         waktuIstirahatSholatHour += 1
+            //     }
+            //     const waktuIstirahatSholat = moment((waktuIstirahatSholatHour + ':' + waktuIstirahatSholatMinutes), 'h:m').format('HH:mm')
 
-                //CALCULATE PERSIAPAN ADZAN / SHOLAT
-                const miliPraAdzan = 10 * 60 //MENIT PER DETIK
-                const miliWaktuAdzan = parseInt(moment(waktuAdzan, 'HH:mm').format('X'))
-                const praWaktuAdzan = moment((miliWaktuAdzan - miliPraAdzan), 'X').format('HH:mm')
-                praAdzan = praWaktuAdzan;
-                istirahatSholat = waktuIstirahatSholat
+            //     //CALCULATE PERSIAPAN ADZAN / SHOLAT
+            //     const miliPraAdzan = 10 * 60 //MENIT PER DETIK
+            //     const miliWaktuAdzan = parseInt(moment(waktuAdzan, 'HH:mm').format('X'))
+            //     const praWaktuAdzan = moment((miliWaktuAdzan - miliPraAdzan), 'X').format('HH:mm')
+            //     praAdzan = praWaktuAdzan;
+            //     istirahatSholat = waktuIstirahatSholat
 
-                //JIKA TIBA WAKTU SHOLAT MAKA TUTUP
-                if (thisTime >= praWaktuAdzan &&
-                    thisTime <= waktuIstirahatSholat
-                ) {
-                    statusPractice = 'close'
-                    informasiDetail = info.sholat
-                    break;
-                } else {
-                    statusPractice = 'open'
-                }
+            //     //JIKA TIBA WAKTU SHOLAT MAKA TUTUP
+            //     if (thisTime >= praWaktuAdzan &&
+            //         thisTime <= waktuIstirahatSholat
+            //     ) {
+            //         statusPractice = 'close'
+            //         informasiDetail = info.sholat
+            //         break;
+            //     } else {
+            //         statusPractice = 'open'
+            //     }
+            // }
+            const isPrayerTime = cekIsPrayerTime()
+            // JIKA TIBA WAKTU SHOLAT MAKA TUTUP
+            if (isPrayerTime) {
+                statusPractice = 'close'
+                informasiDetail = info.sholat
+            } else {
+                statusPractice = 'open'
             }
 
             break;

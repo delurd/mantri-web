@@ -1,6 +1,7 @@
 'use server'
 
 import { credentialKey, host } from '@/utils/variables';
+import moment from 'moment';
 import { cookies } from 'next/headers'
 import { NextResponse } from 'next/server';
 import { SyntheticEvent } from 'react';
@@ -75,3 +76,14 @@ export const actionLogin = async (username: string, password: string) => {
 
     return json
 };
+
+
+export const cekIsSensorOnline = async (time: string) => {
+    const batas = 800 //14mnt
+    const calculateGap =
+        parseInt(moment(time, 'HH:mm:ss').format('X')) - parseInt(moment(new Date()).format('X'));
+
+    if ((calculateGap * -1) < batas) { return true }
+
+    return false
+}

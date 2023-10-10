@@ -8,7 +8,7 @@ import Loader from '@/components/Loader/Loader';
 import Image from 'next/image';
 import moment from 'moment';
 import {useRouter} from 'next/navigation';
-import {cekCookies, handleLogout} from '../action';
+import {cekCookies, cekIsSensorOnline, handleLogout} from '../action';
 import SwitchStatus from '@/components/SwitchStatus/SwitchStatus';
 
 type Props = {};
@@ -66,33 +66,23 @@ const Admin = (props: Props) => {
   };
 
   const getDoorSensorStatus = async () => {
-    console.log('get sensor');
-
-    await fetch(host + '/api/door-sensor-status', {
+    const res = await fetch(host + '/api/door-sensor-status', {
       headers: {credentialKey},
-    })
-      .then(async (res) => {
-        const json = await res.json();
+    });
+    const json = await res.json();
 
-        console.log("sensor then");
-        console.log(res);
-        if (json.message !== 'success') return;
+    if (json.message !== 'success') return;
 
+    console.log(json);
 
-        const data = json.data;
-        const time = json.time;
-        const isOnline =
-          parseInt(moment(time, 'HH:mm:ss').format('HH')) -
-          new Date().getHours();
+    const data = json.data;
+    const time = json.time;
 
-        setIsSensorOnline(isOnline ? 'Offline' : 'Online');
+    const isOnline = await cekIsSensorOnline(time);
 
-        setDoorSensorStatus(data);
-      })
-      .catch((error) => {
-        console.log('error get door status');
-        console.log(error);
-      });
+    setIsSensorOnline(isOnline ? 'Online' : 'Offline');
+
+    setDoorSensorStatus(data);
   };
 
   const getManualStatusPractice = async () => {
@@ -126,47 +116,47 @@ const Admin = (props: Props) => {
     setStatusPraktik(data.status);
   };
 
-  const getSensorOnline = async () => {
-    console.log('ini response door sensor');
+  // const getSensorOnline = async () => {
+  //   console.log('ini response door sensor');
 
-    try {
-      const res = await fetch('http://192.168.134.88/status', {
-        mode: 'cors',
-        method: 'GET',
-      });
+  //   try {
+  //     const res = await fetch('http://192.168.134.88/status', {
+  //       mode: 'cors',
+  //       method: 'GET',
+  //     });
 
-      setIsSensorOnline('Online');
-    } catch (error) {
-      setIsSensorOnline('Offline');
-    }
-    console.log('ini response door sensor end');
+  //     setIsSensorOnline('Online');
+  //   } catch (error) {
+  //     setIsSensorOnline('Offline');
+  //   }
+  //   console.log('ini response door sensor end');
 
-    // try {
-    //   console.log('mulai');
+  //   // try {
+  //   //   console.log('mulai');
 
-    //   const socket = new WebSocket('ws://192.168.134.88:80');
+  //   //   const socket = new WebSocket('ws://192.168.134.88:80');
 
-    //   socket.onopen = (event) => {
-    //     setIsSensorOnline('Online');
-    //     console.log(new Date());
-    //   };
+  //   //   socket.onopen = (event) => {
+  //   //     setIsSensorOnline('Online');
+  //   //     console.log(new Date());
+  //   //   };
 
-    //   socket.onclose = (event) => {
-    //     console.log('diconnect');
-    //     console.log(new Date());
-    //     setIsSensorOnline('Offline');
+  //   //   socket.onclose = (event) => {
+  //   //     console.log('diconnect');
+  //   //     console.log(new Date());
+  //   //     setIsSensorOnline('Offline');
 
-    //     setTimeout(function () {
-    //       getSensorOnline();
-    //     }, 60000);
-    //   };
+  //   //     setTimeout(function () {
+  //   //       getSensorOnline();
+  //   //     }, 60000);
+  //   //   };
 
-    //   console.log('selesai');
+  //   //   console.log('selesai');
 
-    // } catch (error) {
-    //   setIsSensorOnline('Offline');
-    // }
-  };
+  //   // } catch (error) {
+  //   //   setIsSensorOnline('Offline');
+  //   // }
+  // };
 
   useEffect(() => {
     getJamPraktek();
@@ -312,6 +302,42 @@ const Admin = (props: Props) => {
   const _OtomatisPage = () => {
     return (
       <>
+        <div className={s.card}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+            }}
+          >
+            <h3>Sensor Pintu</h3>
+            <div style={{display: 'flex', alignItems: 'center'}}>
+              {loadingSetManualStatus ? <Loader scale="0.3" /> : <></>}
+              <Switch checked scale="0.7" onChange={() => {}} />
+            </div>
+          </div>
+          {isSensorOnline ? (
+            <p
+              style={{
+                fontSize: '14px',
+                color: isSensorOnline == 'Online' ? '#4BA65FCF' : '#EA8989',
+              }}
+            >
+              {isSensorOnline}
+            </p>
+          ) : (
+            <Loader size={12} />
+          )}
+          <br />
+          <div>
+            <p style={{marginBottom: '5px', color: 'grey'}}>Status :</p>
+            <SwitchStatus
+              disabled={!isSensorOnline || isSensorOnline == 'Offline'}
+              status={doorSensorStatus ? 'open' : 'close'}
+              getStatus={(value) => {}}
+            />
+          </div>
+        </div>
         <div>
           <div className={s.card}>
             <h3>Jam Layanan</h3>
@@ -396,42 +422,6 @@ const Admin = (props: Props) => {
             </button> */}
             <Button onClick={handleSubmit}>Submit</Button>
           </form>
-        </div>
-        <div className={s.card}>
-          <div
-            style={{
-              display: 'flex',
-              justifyContent: 'space-between',
-              alignItems: 'center',
-            }}
-          >
-            <h3>Sensor Pintu</h3>
-            <div style={{display: 'flex', alignItems: 'center'}}>
-              {loadingSetManualStatus ? <Loader scale="0.3" /> : <></>}
-              <Switch checked scale="0.7" onChange={() => {}} />
-            </div>
-          </div>
-          {isSensorOnline ? (
-            <p
-              style={{
-                fontSize: '14px',
-                color: isSensorOnline == 'Online' ? '#4BA65FCF' : '#EA8989',
-              }}
-            >
-              {isSensorOnline}
-            </p>
-          ) : (
-            <Loader size={12} />
-          )}
-          <br />
-          <div>
-            <p style={{marginBottom: '5px', color: 'grey'}}>Status :</p>
-            <SwitchStatus
-              disabled={!isSensorOnline}
-              status={doorSensorStatus ? 'open' : 'close'}
-              getStatus={(value) => {}}
-            />
-          </div>
         </div>
       </>
     );

@@ -36,7 +36,7 @@ export const POST = async (request: NextRequest) => {
 
     if (iotKey !== iotCredentialKey || doorStatus == undefined || time == undefined) return NextResponse.json({ message: 'failed' }, { status: 403 })
 
-    let isDoorOpen = doorStatus == 'open' ? true : false;
+    let isDoorOpen = doorStatus !== 'open' ? true : false;
     // await kv.set('doorStatus', isDoorOpen)
 
     if (await prisma.doorStatus.findUnique({ where: { id: 1 } })) {
