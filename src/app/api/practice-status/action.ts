@@ -10,7 +10,8 @@ export const cekIsPrayerTime = () => {
     const jadwalSholatHarian = Object.values(jadwalSholatBulanan)[thisDay - 1]
 
     const jumlahWaktuSholat = Object.keys(jadwalSholatHarian).length;
-    const waktuIstirahat = 20;
+    const waktuIstirahat = 20; //minute
+    const miliPraAdzan = 10 * 60 //MENIT PER DETIK
     let praAdzan = '';
     let istirahatSholat = ''
 
@@ -31,7 +32,6 @@ export const cekIsPrayerTime = () => {
         const waktuIstirahatSholat = moment((waktuIstirahatSholatHour + ':' + waktuIstirahatSholatMinutes), 'h:m').format('HH:mm')
 
         //CALCULATE PERSIAPAN ADZAN / SHOLAT
-        const miliPraAdzan = 10 * 60 //MENIT PER DETIK
         const miliWaktuAdzan = parseInt(moment(waktuAdzan, 'HH:mm').format('X'))
         const praWaktuAdzan = moment((miliWaktuAdzan - miliPraAdzan), 'X').format('HH:mm')
         praAdzan = praWaktuAdzan;

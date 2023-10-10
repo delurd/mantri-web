@@ -12,17 +12,40 @@ const getDataStatus = async () => {
     method: 'POST',
     cache: 'no-store',
     headers: {credentialKey: credentialKey},
-    body: JSON.stringify({time: moment().utcOffset(7).format()})
+    body: JSON.stringify({time: moment().utcOffset(7).format()}),
   });
-  const json = await res.json();  
+  const json = await res.json();
   const data = json.data;
   // console.log(data);
-  
+
   return data;
 };
 
 export default async function Home() {
-  const data = await getDataStatus();  
+  const data = await getDataStatus();
+
+  if (data?.information == 'offline') {
+    return (
+      <main className={s.itemCenter + ' ' + s.main}>
+        <div
+          style={{
+            backgroundColor: 'white',
+            padding: '60px 40px',
+            color: '#EA8989',
+            textAlign: 'center',
+            borderRadius: '30px',
+            border: '1px solid #EA8989',
+          }}
+        >
+          <h1 style={{fontWeight: '400', fontSize: '38px'}}>⚠</h1>
+          <h3>
+            Sistem sedang
+            <br /> tidak aktif
+          </h3>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className={s.itemCenter + ' ' + s.main}>
