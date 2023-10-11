@@ -14,7 +14,7 @@ export const GET = async (request: NextRequest) => {
         // const statusDoor = await kv.get('doorStatus')
         const statusDoor = await prisma.doorStatus.findUnique({ where: { id: 1 } })
 
-        return NextResponse.json({ message: 'success', data: statusDoor?.status, time: statusDoor?.time }, { status: 200 })
+        return NextResponse.json({ message: 'success', data: statusDoor?.status, time: statusDoor?.time, beTime: parseInt(moment(new Date()).format('X')) }, { status: 200 })
     } catch (error) {
 
     }
