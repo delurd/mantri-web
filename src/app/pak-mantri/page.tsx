@@ -78,8 +78,9 @@ const Admin = (props: Props) => {
     const data = json.data;
     const time = json.time;
 
-    const isOnline = await cekIsSensorOnline(time);
-    console.log('Sensor Online ' + isOnline);
+    const isOnline = cekIsSensorOnline(time);
+    console.log('Sensor Online :');
+    console.log(isOnline);
     console.log(
       moment(time, 'HH:mm:ss').format('X') +
         ' <' +
@@ -93,7 +94,7 @@ const Admin = (props: Props) => {
     if (calculateGap * -1 < 800) console.log(calculateGap + 'TRUE');
     else console.log(calculateGap + 'FALSE');
 
-    setIsSensorOnline(isOnline ? 'Online' : 'Offline');
+    setIsSensorOnline(isOnline.data ? 'Online' : 'Offline');
 
     setDoorSensorStatus(data);
   };

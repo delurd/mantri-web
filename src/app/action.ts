@@ -78,13 +78,13 @@ export const actionLogin = async (username: string, password: string) => {
 };
 
 
-export const cekIsSensorOnline = async (time: string) => {
+export const cekIsSensorOnline = (time: string) => {
     const batas = 800 //14mnt
     const calculateGap =
         parseInt(moment(time, 'HH:mm:ss').format('X')) - parseInt(moment(new Date()).utcOffset(7).format('X'));
     console.log(calculateGap + "<<<<<<<<<<<<<<<<<<<<<<");
-    
-    if ((calculateGap * -1) < batas) { return true }
 
-    return false
+    if ((calculateGap * -1) < batas) { return { data: true, gapTime: calculateGap } }
+
+    return { data: false, gapTime: calculateGap }
 }
