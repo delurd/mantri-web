@@ -86,13 +86,12 @@ const Admin = (props: Props) => {
         parseInt(moment(new Date()).format('X'))
     );
     const calculateGap =
-        parseInt(moment(time, 'HH:mm:ss').format('X')) - parseInt(moment(new Date()).format('X'));
-    // console.log(calculateGap + "<<<<<<<<<<<<<<<<<<<<<<");
-    
-    if ((calculateGap * -1) < 800) console.log(calculateGap + "TRUE");
-    
-    
-    
+      parseInt(moment(time, 'HH:mm:ss').format('X')) -
+      parseInt(moment(new Date()).format('X'));
+    console.log(calculateGap + '<<<<<<<<<<<<<<<<<<<<<<');
+
+    if (calculateGap * -1 < 800) console.log(calculateGap + 'TRUE');
+    else console.log(calculateGap + 'FALSE');
 
     setIsSensorOnline(isOnline ? 'Online' : 'Offline');
 
