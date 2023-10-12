@@ -84,7 +84,7 @@ export const cekIsSensorOnline = (time: string) => {
         parseInt(moment(time, 'HH:mm:ss').format('X')) - parseInt(moment(new Date()).utcOffset(7).format('X'));
     console.log(calculateGap + "<<<<<<<<<<<<<<<<<<<<<<");
 
-    if ((calculateGap * -1) < batas) { return { data: true, gapTime: calculateGap } }
+    if ((calculateGap * -1) < batas) { return { data: true, gapTime: calculateGap, timeDb: parseInt(moment(new Date()).utcOffset(7).format('X')), timeSensor: parseInt(moment(time, 'HH:mm:ss').format('X')) } }
 
-    return { data: false, gapTime: calculateGap }
+    return { data: false, gapTime: calculateGap, timeDb: parseInt(moment(new Date()).utcOffset(7).format('X')), timeSensor: parseInt(moment(time, 'HH:mm:ss').format('X')) }
 }

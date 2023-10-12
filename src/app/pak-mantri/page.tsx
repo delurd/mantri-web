@@ -81,6 +81,7 @@ const Admin = (props: Props) => {
     const isOnline = cekIsSensorOnline(time);
     console.log('Sensor Online :');
     console.log(isOnline);
+    console.log(isOnline.gapTime);
     console.log(
       moment(time, 'HH:mm:ss').format('X') +
         ' <' +
