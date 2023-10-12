@@ -78,7 +78,7 @@ const Admin = (props: Props) => {
     const data = json.data;
     const time = json.time;
 
-    const isOnline = await cekIsSensorOnline(time);
+    const isOnline = cekIsSensorOnline(time);
     console.log('Sensor Online :');
     console.log(isOnline);
     console.log(isOnline.gapTime);
