@@ -84,7 +84,7 @@ export const cekIsSensorOnline = (time: string) => {
         parseInt(moment(time, 'HH:mm:ss').format('X')) - parseInt(moment(new Date()).utcOffset(7).format('X'));
     console.log(calculateGap + "<<<<<<<<<<<<<<<<<<<<<<");
 
-    if ((calculateGap * -1) < batas) { return { data: true, gapTime: calculateGap, timeDb: moment(new Date()).utcOffset(7).format('X'), timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'), timeSensor: moment(time, 'HH:mm:ss').utcOffset(7).format('X'), timeSensors: time } }
+    if ((calculateGap * -1) < batas) { return { data: true, gapTime: calculateGap, timeDb: moment(new Date()).utcOffset(7).format('X'), timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'), timeSensor: moment(time, 'HH:mm:ss').format('X'), timeSensors: time } }
 
-    return { data: false, gapTime: calculateGap, timeDb: parseInt(moment(new Date()).utcOffset(7).format('X')), timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'), timeSensor: parseInt(moment(time, 'HH:mm:ss').utcOffset(7).format('X')), timeSensors: time }
+    return { data: false, gapTime: calculateGap, timeDb: moment(new Date()).utcOffset(7).format('X'), timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'), timeSensor: moment(time, 'HH:mm:ss').format('X'), timeSensors: time }
 }
