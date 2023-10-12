@@ -85,8 +85,8 @@ export const cekIsSensorOnline = (time: string) => {
 
 
     if ((calculateGap * -1) < batas) {
-        return { data: true, gapTime: calculateGap, timeDb: moment(new Date()).utcOffset(7).format('X'), timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'), timeSensor: moment(time, 'HH:mm:ss').utcOffset(-7).format('X'), timeSensors: time }
+        return { data: true, gapTime: calculateGap, timeDb: moment(new Date()).utcOffset(7).format('X'), timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'), timeSensor: moment(time, 'HH:mm:ss').utcOffset(0).format('X'), timeSensors: time }
     }
 
-    return { data: false, gapTime: calculateGap, timeDb: moment(new Date()).utcOffset(7).format('X'), timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'), timeSensor: moment(time, 'HH:mm:ss').utcOffset(-7).format('X'), timeSensors: time }
+    return { data: false, gapTime: calculateGap, timeDb: moment(new Date()).utcOffset(7).format('X'), timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'), timeSensor: moment(time, 'HH:mm:ss').utcOffset(0).format('X'), timeSensors: time }
 }
