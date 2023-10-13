@@ -86,6 +86,7 @@ export const cekIsSensorOnline = async (time: string) => {
         (parseInt(moment(time, 'HH:mm:ss').format('X')) - tujuJamMils) - parseInt(moment(new Date()).utcOffset(7).format('X'));
 
     const timeMils = parseInt(moment(time, 'HH:mm:ss').format('X')) - 25200
+    const timeInDb = moment(new Date()).utcOffset(7).format('HH:mm:ss')
 
     if ((calculateGap * -1) < batas) {
         return {
@@ -93,6 +94,7 @@ export const cekIsSensorOnline = async (time: string) => {
             gapTime: calculateGap,
             timeDb: moment(new Date()).utcOffset(7).format('X'),
             timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'),
+            timeDbsToMils: moment(timeInDb).format('X'),
             timeSensor: timeMils,
             timeSensorToFormat: moment(timeMils).utcOffset(7).format('HH:mm:ss'),
             timeSensorToFormatNoUtc: moment(timeMils).format('HH:mm:ss'),
@@ -107,6 +109,7 @@ export const cekIsSensorOnline = async (time: string) => {
         gapTime: calculateGap,
         timeDb: moment(new Date()).utcOffset(7).format('X'),
         timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'),
+        timeDbsToMils: moment(timeInDb).format('X'),
         timeSensor: timeMils,
         timeSensorToFormat: moment(timeMils).utcOffset(7).format('HH:mm:ss'),
         timeSensorToFormatNoUtc: moment(timeMils).format('HH:mm:ss'),
