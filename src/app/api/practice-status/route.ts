@@ -39,7 +39,7 @@ export const POST = async (request: NextRequest) => {
     try {
         const statusDoor = await prisma.doorStatus.findUnique({ where: { id: 1 } })
 
-        const isOnline = cekIsSensorOnline(statusDoor?.time ?? "00:00:00")
+        const isOnline = await cekIsSensorOnline(statusDoor?.time ?? "00:00:00")
         console.log(isOnline.data + "isonlien");
 
         if (isOnline.data) {

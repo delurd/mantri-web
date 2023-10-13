@@ -78,14 +78,14 @@ export const actionLogin = async (username: string, password: string) => {
 };
 
 
-export const cekIsSensorOnline = (time: string) => {
+export const cekIsSensorOnline = async (time: string) => {
     const batas = 800 //14mnt
     const tujuJamMils = 25200
 
     const calculateGap =
         (parseInt(moment(time, 'HH:mm:ss').format('X')) - tujuJamMils) - parseInt(moment(new Date()).utcOffset(7).format('X'));
 
-    const timeMils = moment(time, 'HH:mm:ss').format('X')
+    const timeMils = parseInt(moment(time, 'HH:mm:ss').format('X')) - 25200
 
     if ((calculateGap * -1) < batas) {
         return {
@@ -93,7 +93,8 @@ export const cekIsSensorOnline = (time: string) => {
             gapTime: calculateGap,
             timeDb: moment(new Date()).utcOffset(7).format('X'),
             timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'),
-            timeSensor: parseInt(moment(time, 'HH:mm:ss').utcOffset(0).format('X')) - 25200,
+            timeSensor: timeMils,
+            timeSensorToFormat: moment(timeMils).utcOffset(7).format('HH:mm:ss'),
             timeSensors: time
         }
     }
@@ -103,7 +104,8 @@ export const cekIsSensorOnline = (time: string) => {
         gapTime: calculateGap,
         timeDb: moment(new Date()).utcOffset(7).format('X'),
         timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'),
-        timeSensor: moment(time, 'HH:mm:ss').utcOffset(0).format('X'),
+        timeSensor: timeMils,
+        timeSensorToFormat: moment(timeMils).utcOffset(7).format('HH:mm:ss'),
         timeSensors: time
     }
 }
