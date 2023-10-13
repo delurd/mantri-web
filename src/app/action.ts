@@ -109,6 +109,7 @@ export const cekIsSensorOnline = async (time: string) => {
         timeSensor: timeMils,
         timeSensorToFormat: moment(timeMils).utcOffset(7).format('HH:mm:ss'),
         timeSensorToFormatNoUtc: moment(timeMils).format('HH:mm:ss'),
+        timeBiasa: parseInt(moment(time, 'hh:mm:ss').format('X')),
         timeSensors: time
     }
 }
