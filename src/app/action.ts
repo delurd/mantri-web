@@ -92,7 +92,7 @@ export const cekIsSensorOnline = async (time: string) => {
         return {
             data: true,
             gapTime: calculateGap,
-            timeDb: moment(new Date()).utcOffset(7).format('X'),
+            timeDb: moment(new Date()).format('X'),
             timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'),
             timeDbsToMils: moment(timeInDb,"HH:mm:ss").format('X'),
             timeSensor: timeMils,
