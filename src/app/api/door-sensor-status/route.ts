@@ -1,8 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { kv } from "@vercel/kv";
 import { iotCredentialKey } from "@/utils/variables";
-import moment from "moment";
-import { doorSensorLastUpdate, getDoorSensorLastUpdate, setDoorSensorLastUpdate } from "@/utils/data/doorSendor";
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
@@ -14,7 +11,7 @@ export const GET = async (request: NextRequest) => {
         // const statusDoor = await kv.get('doorStatus')
         const statusDoor = await prisma.doorStatus.findUnique({ where: { id: 1 } })
 
-        return NextResponse.json({ message: 'success', data: statusDoor?.status, time: statusDoor?.time, beTime: parseInt(moment(new Date()).format('X')) }, { status: 200 })
+        return NextResponse.json({ message: 'success', data: statusDoor?.status, time: statusDoor?.time }, { status: 200 })
     } catch (error) {
 
     }
@@ -32,7 +29,7 @@ export const POST = async (request: NextRequest) => {
     const iotKey = json?.IOTKey;
     const doorStatus = json?.doorStatus;
     const time = json?.time;
-    console.log('door ' + doorStatus);
+
 
     if (iotKey !== iotCredentialKey || doorStatus == undefined || time == undefined) return NextResponse.json({ message: 'failed' }, { status: 403 })
 
@@ -44,7 +41,6 @@ export const POST = async (request: NextRequest) => {
     } else {
         await prisma.doorStatus.create({ data: { status: isDoorOpen, time } })
     }
-    console.log("sukses")
 
     return NextResponse.json({ message: 'success' }, { status: 200 })
 }

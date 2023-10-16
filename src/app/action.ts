@@ -80,44 +80,14 @@ export const actionLogin = async (username: string, password: string) => {
 
 export const cekIsSensorOnline = async (time: string) => {
     const batas = 800 //14mnt
-    const tujuJamMils = 25200
-    const timeMils = parseInt(moment(time, 'HH:mm:ss').format('X')) - 25200
     const timeInDb = moment(new Date()).utcOffset(7).format('HH:mm:ss')
 
-    // const calculateGap =
-    //     (parseInt(moment(time, 'HH:mm:ss').format('X')) - tujuJamMils) - parseInt(moment(new Date()).utcOffset(7).format('X'));
     const calculateGap =
         (parseInt(moment(timeInDb, "HH:mm:ss").format('X')) - parseInt(moment(time, 'hh:mm:ss').format('X')));
 
-
-    if ((calculateGap * -1) < batas) {
-        return {
-            data: true,
-            gapTime: calculateGap,
-            timeDb: moment(new Date()).format('X'),
-            timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'),
-            timeDbsToMils: moment(timeInDb, "HH:mm:ss").format('X'),
-            timeSensor: timeMils,
-            timeSensorToFormat: moment(timeMils).utcOffset(7).format('HH:mm:ss'),
-            timeSensorToFormatNoUtc: moment(timeMils).format('HH:mm:ss'),
-            timeBiasa: parseInt(moment(time, 'hh:mm:ss').format('X')),
-            timeBiasaUtc: parseInt(moment(time, 'hh:mm:ss').utcOffset(7).format('X')),
-            timeSensors: time
-        }
+    if ((calculateGap) < batas) {
+        return true
     }
 
-    return {
-        data: false,
-        gapTime: calculateGap,
-        timeDb: moment(new Date()).utcOffset(7).format('X'),
-        timeDbs: moment(new Date()).utcOffset(7).format('HH:mm:ss'),
-        timeDbsToMils: moment(timeInDb, "HH:mm:ss").format('X'),
-        timeSensor: timeMils,
-        timeSensorToFormat: moment(timeMils).utcOffset(7).format('HH:mm:ss'),
-        timeSensorToFormatNoUtc: moment(timeMils).format('HH:mm:ss'),
-        timeBiasa: parseInt(moment(time, 'hh:mm:ss').format('X')),
-        timeBiasaHH: parseInt(moment(time, 'HH:mm:ss').format('X')),
-        timeBiasaUtc: parseInt(moment(time, 'hh:mm:ss').utcOffset(7).format('X')),
-        timeSensors: time
-    }
+    return false
 }

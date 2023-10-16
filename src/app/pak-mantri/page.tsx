@@ -34,17 +34,13 @@ const Admin = (props: Props) => {
   }, []);
 
   const getJamPraktek = async () => {
-    console.time('jadwal');
-
     const res = await fetch(host + '/api/data-jadwal', {
       headers: {credentialKey},
     });
     const json = await res.json();
     const data = json.data;
-    // console.log(data);
 
     setJamPraktek(data);
-    console.timeEnd('jadwal');
   };
 
   const getDataStatus = async () => {
@@ -79,23 +75,7 @@ const Admin = (props: Props) => {
     const time = json.time;
 
     const isOnline = await cekIsSensorOnline(time);
-    console.log('Sensor Online :');
-    console.log(isOnline);
-    console.log(isOnline.gapTime);
-    console.log(
-      moment(time, 'HH:mm:ss').format('X') +
-        ' <' +
-        parseInt(moment(new Date()).format('X'))
-    );
-    const calculateGap =
-      parseInt(moment(time, 'HH:mm:ss').format('X')) -
-      parseInt(moment(new Date()).format('X'));
-    console.log(calculateGap + '<<<<<<<<<<<<<<<<<<<<<<');
-
-    if (calculateGap * -1 < 800) console.log(calculateGap + 'TRUE');
-    else console.log(calculateGap + 'FALSE');
-
-    setIsSensorOnline(isOnline.data ? 'Online' : 'Offline');
+    setIsSensorOnline(isOnline ? 'Online' : 'Offline');
 
     setDoorSensorStatus(data);
   };
@@ -131,55 +111,12 @@ const Admin = (props: Props) => {
     setStatusPraktik(data.status);
   };
 
-  // const getSensorOnline = async () => {
-  //   console.log('ini response door sensor');
-
-  //   try {
-  //     const res = await fetch('http://192.168.134.88/status', {
-  //       mode: 'cors',
-  //       method: 'GET',
-  //     });
-
-  //     setIsSensorOnline('Online');
-  //   } catch (error) {
-  //     setIsSensorOnline('Offline');
-  //   }
-  //   console.log('ini response door sensor end');
-
-  //   // try {
-  //   //   console.log('mulai');
-
-  //   //   const socket = new WebSocket('ws://192.168.134.88:80');
-
-  //   //   socket.onopen = (event) => {
-  //   //     setIsSensorOnline('Online');
-  //   //     console.log(new Date());
-  //   //   };
-
-  //   //   socket.onclose = (event) => {
-  //   //     console.log('diconnect');
-  //   //     console.log(new Date());
-  //   //     setIsSensorOnline('Offline');
-
-  //   //     setTimeout(function () {
-  //   //       getSensorOnline();
-  //   //     }, 60000);
-  //   //   };
-
-  //   //   console.log('selesai');
-
-  //   // } catch (error) {
-  //   //   setIsSensorOnline('Offline');
-  //   // }
-  // };
-
   useEffect(() => {
     getJamPraktek();
     getManualStatus();
     getDataStatus();
     getManualStatusPractice();
     getDoorSensorStatus();
-    // getSensorOnline();
   }, []);
 
   const handleSubmit = async (e: SyntheticEvent) => {

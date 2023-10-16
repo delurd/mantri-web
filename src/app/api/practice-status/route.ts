@@ -33,16 +33,15 @@ export const POST = async (request: NextRequest) => {
         }
         return NextResponse.json({ message: 'success', data: dataReturn }, { status: 200 })
     }
-    console.log("HELOOOOOOO");
+
 
     //CEK IF SENSOR ONLINE AND DOOR SENSOR CLOSE
     try {
         const statusDoor = await prisma.doorStatus.findUnique({ where: { id: 1 } })
 
         const isOnline = await cekIsSensorOnline(statusDoor?.time ?? "00:00:00")
-        console.log(isOnline.data + "isonlien");
 
-        if (isOnline.data) {
+        if (isOnline) {
             if (statusDoor?.status) {
                 //IS OPEN CEK PRAYER TIME
                 const isPrayerTime = cekIsPrayerTime()
@@ -90,8 +89,6 @@ export const POST = async (request: NextRequest) => {
     const jadwalSholatBulanan = Object.values(jadwalSholatLamongan)[thisMonth - 1]
     const jadwalSholatHarian = Object.values(jadwalSholatBulanan)[thisDay - 1]
 
-    let praAdzan = '';
-    let istirahatSholat = ''
 
     //CHECK JAM BUKA
     for (let x = 0; x < jamPraktik.length; x++) {
@@ -123,14 +120,12 @@ export const POST = async (request: NextRequest) => {
         }
     }
 
-    console.log("statusPractice " + statusPractice + moment.locale());
+    // console.log("statusPractice " + statusPractice + moment.locale());
 
     const dataReturn = {
         time: moment(new Date()).utcOffset(7).format(),
         istirahatSholat: {
             adzanHariIni: jadwalSholatHarian,
-            persiapanSholat: praAdzan,
-            istirahat: istirahatSholat,
         },
         status: statusPractice,
         information: informasiDetail
