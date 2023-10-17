@@ -35,7 +35,7 @@ const Admin = (props: Props) => {
 
   const getJamPraktek = async () => {
     const res = await fetch(host + '/api/data-jadwal', {
-      headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+      headers: {credentialKey},
     });
     const json = await res.json();
     const data = json.data;
@@ -48,7 +48,7 @@ const Admin = (props: Props) => {
     const res = await fetch(host + '/api/practice-status', {
       method: 'POST',
       cache: 'no-store',
-      headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+      headers: {credentialKey},
       body: JSON.stringify({time: moment().utcOffset(7).format()}),
     });
     const json = await res.json();
@@ -63,7 +63,7 @@ const Admin = (props: Props) => {
 
   const getDoorSensorStatus = async () => {
     const res = await fetch(host + '/api/door-sensor-status', {
-      headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+      headers: {credentialKey},
     });
     const json = await res.json();
 
@@ -82,7 +82,7 @@ const Admin = (props: Props) => {
 
   const getManualStatusPractice = async () => {
     const res = await fetch(host + '/api/use-status-manual/practice-status', {
-      headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+      headers: {credentialKey},
     });
     const json = await res.json();
     if (res.status !== 200) {
@@ -97,7 +97,7 @@ const Admin = (props: Props) => {
   const submitManualStatusPractice = async (status: string) => {
     const res = await fetch(host + '/api/use-status-manual/practice-status', {
       method: 'POST',
-      headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+      headers: {credentialKey},
       body: JSON.stringify({status}),
     });
     const json = await res.json();
@@ -124,7 +124,7 @@ const Admin = (props: Props) => {
 
     const res = await fetch(host + '/api/data-jadwal', {
       method: 'POST',
-      headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+      headers: {credentialKey},
       body: JSON.stringify({startAt: jamMulai, endAt: jamAkhir}),
     });
     const json = await res.json();
@@ -138,7 +138,7 @@ const Admin = (props: Props) => {
   const handleDelete = async (id: string) => {
     const res = await fetch(host + '/api/data-jadwal', {
       method: 'DELETE',
-      headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+      headers: {credentialKey},
       body: JSON.stringify({id}),
     });
     const json = await res.json();
@@ -154,7 +154,7 @@ const Admin = (props: Props) => {
     try {
       const res = await fetch(host + '/api/use-status-manual', {
         method: 'POST',
-        headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+        headers: {credentialKey},
         body: JSON.stringify({status}),
       });
       const json = await res.json();
@@ -174,7 +174,7 @@ const Admin = (props: Props) => {
 
     const res = await fetch(host + '/api/use-status-manual', {
       method: 'GET',
-      headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+      headers: {credentialKey},
     });
     const json = await res.json();
     const data = json.data;
@@ -191,7 +191,7 @@ const Admin = (props: Props) => {
     try {
       const res = await fetch(host + '/api/door-sensor-status/set-usage', {
         method: 'POST',
-        headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+        headers: {credentialKey},
         body: JSON.stringify({status}),
       });
     } catch (error) {}
@@ -201,7 +201,7 @@ const Admin = (props: Props) => {
     try {
       const res = await fetch(host + '/api/door-sensor-status/set-usage', {
         method: 'GET',
-        headers: {credentialKey, 'Access-Control-Allow-Origin': '*'},
+        headers: {credentialKey},
       });
 
       const json = await res.json();
