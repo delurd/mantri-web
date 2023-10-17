@@ -14,9 +14,14 @@
   padding: 20px;
   color: black;
   border: 2px solid #68b3dd;
-  box-shadow: 0 15px 40px rgba(186, 241, 253, 1);
+  box-shadow: var(--card-shadow);
   flex-wrap: wrap;
   display: block;
+}
+
+.header {
+  position: relative;
+  color: var(--text-color-main);
 }
 
 .containerBox {
@@ -39,7 +44,7 @@
   background-color: white;
   padding: 5px;
   color: #000;
-  box-shadow: 0 15px 40px rgba(186, 241, 253, 1);
+  box-shadow: var(--card-shadow);
   border-radius: 50px;
   overflow: hidden;
   display: flex;
@@ -132,9 +137,15 @@
   gap: 5px;
   cursor: pointer;
   padding: 5px 0 0 0px;
-  opacity: 0.4;
+  opacity: 0.6;
   line-height: 12px;
+  color: #ea8989;
 }
+
+.buttonLogout svg {
+  /* filter: invert(); */
+}
+
 .buttonLogout:hover {
   opacity: 1;
 }

@@ -26,17 +26,8 @@ export default async function Home() {
 
   if (data?.information == 'offline') {
     return (
-      <main className={s.itemCenter + ' ' + s.main}>
-        <div
-          style={{
-            backgroundColor: 'white',
-            padding: '60px 40px',
-            color: '#EA8989',
-            textAlign: 'center',
-            borderRadius: '30px',
-            border: '1px solid #EA8989',
-          }}
-        >
+      <main className={'itemCenter main'}>
+        <div className={s.offlineCard}>
           <h1 style={{fontWeight: '400', fontSize: '38px'}}>⚠</h1>
           <h3>
             Sistem sedang
@@ -48,7 +39,7 @@ export default async function Home() {
   }
 
   return (
-    <main className={s.itemCenter + ' ' + s.main}>
+    <main className={'itemCenter main'}>
       <div className={s.card}>
         <div style={{display: 'flex'}}>
           <div className={s.colTitle}>

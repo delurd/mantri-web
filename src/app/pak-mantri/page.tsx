@@ -386,7 +386,7 @@ const Admin = (props: Props) => {
         style={{padding: '20px 0', marginBottom: '70px'}}
       >
         <div>
-          <div style={{position: 'relative', color: 'black'}}>
+          <div className={s.header}>
             <div style={{display: 'flex', alignItems: 'center', gap: '20px'}}>
               <div>
                 <Image
@@ -425,7 +425,7 @@ const Admin = (props: Props) => {
                   >
                     <path
                       d="M9 0.05V2.062C6.98271 2.31868 5.13885 3.33387 3.84319 4.90122C2.54752 6.46857 1.89728 8.47047 2.02462 10.5C2.15196 12.5296 3.04733 14.4345 4.52874 15.8276C6.01016 17.2207 7.96645 17.9975 10 18C11.9486 18 13.8302 17.2888 15.2917 16C16.7533 14.7112 17.6942 12.9333 17.938 11H19.951C19.449 16.053 15.185 20 10 20C4.477 20 0 15.523 0 10C0 4.815 3.947 0.551 9 0.05ZM18 3.414L10 11.414L8.586 10L16.586 2H12V0H20V8H18V3.414Z"
-                      fill="#09121F"
+                      fill="#EA8989"
                     />
                   </svg>
                 </div>

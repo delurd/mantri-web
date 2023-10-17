@@ -16,7 +16,7 @@
   background-color: rgba(186, 241, 253, 1);
   border-radius: 30px;
   padding: 44px;
-  box-shadow: 0 15px 40px rgba(186, 241, 253, 1);
+  box-shadow: var(--card-shadow);
   color: #68b3dd;
   aspect-ratio: 1/1;
   display: flex;
@@ -24,17 +24,25 @@
   justify-content: space-between;
 }
 
-.colTitle{
-  flex: 1;
-  margin-top: 25px
+.offlineCard {
+  background-color: var(--bg-main);
+  padding: 60px 40px;
+  color: #ea8989;
+  text-align: center;
+  border-radius: 30px;
+  border: 1px solid #ea8989;
 }
 
-.colImage{
-  flex:1;
+.colTitle {
+  flex: 1;
+  margin-top: 25px;
+}
+
+.colImage {
+  flex: 1;
   position: relative;
   pointer-events: none;
 }
-
 
 .illustrationImage {
   position: absolute;
