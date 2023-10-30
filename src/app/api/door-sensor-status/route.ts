@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { iotCredentialKey } from "@/utils/variables";
 import { PrismaClient } from "@prisma/client";
+import moment from "moment";
 
 const prisma = new PrismaClient()
 
@@ -37,9 +38,9 @@ export const POST = async (request: NextRequest) => {
     // await kv.set('doorStatus', isDoorOpen)
 
     if (await prisma.doorStatus.findUnique({ where: { id: 1 } })) {
-        await prisma.doorStatus.update({ where: { id: 1 }, data: { status: isDoorOpen, time } })
+        await prisma.doorStatus.update({ where: { id: 1 }, data: { status: isDoorOpen, time: moment((new Date())).utcOffset(7).format() } })
     } else {
-        await prisma.doorStatus.create({ data: { status: isDoorOpen, time } })
+        await prisma.doorStatus.create({ data: { status: isDoorOpen, time: moment((new Date())).utcOffset(7).format() } })
     }
 
     return NextResponse.json({ message: 'success' }, { status: 200 })
