@@ -101,6 +101,8 @@ export const cekTime = async (time: string) => {
 
     return {
         isOnline: (calculateGap) < batas ? true : false,
+        timeDefault: moment(new Date()).format(),
+        timeDefaultUtc7: moment(new Date()).utcOffset(7).format(),
         timeSensor: time,
         timeDb: timeInDb,
         timeSensorMils: parseInt(moment(time, 'hh:mm:ss').format('X')),
