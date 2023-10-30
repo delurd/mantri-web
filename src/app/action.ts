@@ -105,6 +105,8 @@ export const cekTime = async (time: string) => {
         timeDb: timeInDb,
         timeSensorMils: parseInt(moment(time, 'hh:mm:ss').format('X')),
         timeDbMils: parseInt(moment(timeInDb, "HH:mm:ss").format('X')),
+        timeSensorOffset0: moment(time, 'hh:mm:ss').format(),
+        timeDbOffset0: moment(timeInDb, "HH:mm:ss").format(),
         calculateGap
     }
 }
