@@ -8,7 +8,7 @@ import Loader from '@/components/Loader/Loader';
 import Image from 'next/image';
 import moment from 'moment';
 import {useRouter} from 'next/navigation';
-import {cekCookies, cekIsSensorOnline, handleLogout} from '../action';
+import {cekCookies, cekIsSensorOnline, cekTime, handleLogout} from '../action';
 import SwitchStatus from '@/components/SwitchStatus/SwitchStatus';
 
 type Props = {};
@@ -75,6 +75,13 @@ const Admin = (props: Props) => {
     const time = json.time;
 
     const isOnline = await cekIsSensorOnline(time);
+
+    console.log('/////CEK ONLINE SENSOR///////');
+
+    console.log(await cekTime(time));
+
+    console.log('-----CEK ONLINE SENSOR--------');
+
     setIsSensorOnline(isOnline ? 'Online' : 'Offline');
 
     setDoorSensorStatus(data);

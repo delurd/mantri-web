@@ -91,3 +91,20 @@ export const cekIsSensorOnline = async (time: string) => {
 
     return false
 }
+
+export const cekTime = async (time: string) => {
+    const batas = 800 //14mnt
+    const timeInDb = moment(new Date()).utcOffset(7).format('HH:mm:ss')
+
+    const calculateGap =
+        (parseInt(moment(timeInDb, "HH:mm:ss").format('X')) - parseInt(moment(time, 'hh:mm:ss').format('X')));
+
+    return {
+        isOnline: (calculateGap) < batas ? true : false,
+        timeSensor: time,
+        timeDb: timeInDb,
+        timeSensorMils: parseInt(moment(time, 'hh:mm:ss').format('X')),
+        timeDbMils: parseInt(moment(timeInDb, "HH:mm:ss").format('X')),
+        calculateGap
+    }
+}
